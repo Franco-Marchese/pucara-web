@@ -42,11 +42,11 @@ class EgresoView(View):
         return desautorizar
 
 class RegistrarView(View):
-    @method_decorator(token_requerido)
+    # @method_decorator(token_requerido)
     def get(self, request):
         return render(request, 'registro.html', {})
     
-    @method_decorator(token_requerido)
+    # @method_decorator(token_requerido)
     def post(self, request):
         # Devuelve True si el correo ya esta registrado.
         yaExiste = verify(request.POST["email"])
