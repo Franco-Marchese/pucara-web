@@ -1,0 +1,73 @@
+<form action="." method="POST">
+    {% csrf_token %}
+  
+    <label for="tracto">Tracto:</label>
+    <input 
+    type="text" 
+    name="tracto" 
+    placeholder="Ingrese el número de tracto"
+    maxlength="4"
+    required>
+  
+    <label for="cargado">Cargado:</label>
+    <input 
+    type="checkbox" 
+    name="cargado" 
+    value="1"
+    >
+  
+    <label for="hora">Hora:</label>
+    <input 
+    type="datetime-local" 
+    name="fecha" 
+    required>
+  
+    <label for="ppu">PPU:</label>
+    <input 
+    type="text" 
+    name="ppu" 
+    required 
+    maxlength="6">
+  
+    <label for="comienzoContenedor">Contenedor:</label>
+    <input 
+    type="text" 
+    name="comienzoContenedor" 
+    required 
+    maxlength="10">
+
+    <label for="finalContenedor"> - </label>
+    <input 
+    type="text" 
+    name="finalContenedor" 
+    required 
+    maxlength="1">
+  
+    <label for="sello">Sello:</label>
+    <input 
+    type="text" 
+    name="sello" 
+    required
+    maxlength="8">
+  
+    <label for="idConductor">Conductor:</label>
+    <select id="idConductor" name="idConductor" required>
+      <!-- Options for idConductor selection -->
+      {% for e in conductores %}
+      <option value="{{ e.id }}"> {{ e.nombre }} </option>
+      {% endfor %}
+    </select>
+  
+    <label for="idCamion">Tipo de camion:</label>
+    <select name="idCamion" required>
+      <!-- Options for idCamion selection -->
+      {% for e in camiones %}
+      <option value="{{ e.id }}"> {{ e.nombre }} </option>
+      {% endfor %}
+    </select>
+  
+    <p> Este registro será guardado a responsabilidad de <i> {{ autor.nombre }} </i> </p>
+  
+    <button type="submit">Submit</button>
+  </form>
+  

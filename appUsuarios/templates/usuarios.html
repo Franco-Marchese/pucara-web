@@ -1,0 +1,12 @@
+<ul>
+    {% for e in usuarios %}
+    <div>
+        <li> 
+            {{ e.nombre }} 
+        </li>
+        <a href="{% url 'eliminar' e.id %}">
+            Eliminar
+        </a>
+    </div>
+    {% endfor %}
+</ul>

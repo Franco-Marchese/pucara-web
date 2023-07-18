@@ -1,0 +1,21 @@
+<h1>
+    Formulario para filtrar resultados.
+</h1>
+<form action="." method="POST">
+    <input/>
+</form>
+<a href="{% url 'nuevoRegistro' %}">
+    Crear un registro!
+</a>
+<h1>
+    Resultados.
+</h1>
+<ul>
+    {% for e in registros %}
+    <div>
+        <li> 
+            {{ e.tracto }} 
+        </li>
+    </div>
+    {% endfor %}
+</ul>
