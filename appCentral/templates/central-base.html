@@ -1,0 +1,42 @@
+{% load static %}
+{% load static tailwind_tags %}
+
+<html class="scroll-smooth scroll-pt-12">
+  <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="description" content="">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>PUCARA</title>
+      {% tailwind_css %}
+  </head>
+  <nav class="bg-zinc-950">
+    <img 
+    alt="logo" 
+    src="{% static 'img\pucara.jpg' %}"
+    class="h-16 w-16"
+    />
+    <a 
+    href="{% url 'egreso' %}"
+    class="text-white"> Cerrar sesion </a>
+  </nav>
+  <body>
+    <div class="col-start-2 col-span-4">
+        <!-- Menu -->
+        {% block menu %}
+        {% endblock %}
+
+        <!-- Registros -->
+        {% block registros %}
+        {% endblock %}
+
+        <!-- nuevoRegistro -->
+        {% block nuevoRegistro %}
+        {% endblock %}
+
+    </div>
+  </body>
+  <footer>
+    <!--AGREGAR FOOTER-->
+  </footer>
+</html>
