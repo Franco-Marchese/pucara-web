@@ -1,24 +1,15 @@
+{% extends 'usuario-base.html' %}
+{% load static %}
+
+{% block sesion %}
 <form action="." method="POST">
     {% csrf_token %}
-    <input 
-    required 
-    name="email" 
-    type="email" 
-    autocomplete="email" 
-    placeholder="Correo electrónico"
-    class="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
+    <input required name="email" type="email" autocomplete="email" placeholder="Correo electrónico" class="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
     >
-    <input 
-    required 
-    name="contraseña" 
-    type="password" 
-    placeholder="Contraseña"
-    class="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
-    >
+    <input required name="contraseña" type="password" placeholder="Contraseña" class="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6">
 
-    <button 
-    type="submit" 
-    class="flex w-full justify-center rounded-md bg-orange-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600">
-        Registrar
+    <button type="submit" class="flex w-full justify-center rounded-md bg-amber-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600">
+        iniciar sesion
     </button>
 </form>
+{% endblock %}

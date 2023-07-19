@@ -1,3 +1,7 @@
+{% extends 'usuario-base.html' %}
+{% load static %}
+
+{% block usuarios %}
 <ul>
     {% for e in usuarios %}
     <div>
@@ -10,3 +14,6 @@
     </div>
     {% endfor %}
 </ul>
+{% endblock %}
+
+
