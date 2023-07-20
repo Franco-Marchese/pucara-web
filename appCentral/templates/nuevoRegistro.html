@@ -7,10 +7,10 @@
       {% csrf_token %}
       <div class="flex flex-col items-center justify-center bg-zinc-400 text-center my-6 mx-4">
         <div class="my-3 text-2xl font-semibold">
-          <h1>Registra Un Camion</h1>
+          <h1>Registra Un Camión</h1>
         </div>
         <div class="col-start-2 grid my-2">
-          <label for="tracto">Tracto</label>
+          <label for="tracto">N° Tracto</label>
           <input 
             type="text" 
             name="tracto" 
@@ -21,7 +21,7 @@
         </div>
 
         <div class="col-start-2 grid my-2">
-          <label for="cargado">Cargado</label>
+          <label for="cargado">Lleno</label>
           <input 
             type="checkbox" 
             name="cargado" 
@@ -31,7 +31,7 @@
         </div>
       
         <div class="col-start-2 grid my-2">
-          <label for="hora">Hora:</label>
+          <label for="hora">Hora</label>
           <input 
             type="datetime-local" 
             name="fecha" 
@@ -42,7 +42,7 @@
         </div>
       
         <div class="col-start-2 grid my-2">
-          <label for="ppu">PPU</label>
+          <label for="ppu">PPU Semi Remorque</label>
           <input 
             type="text" 
             name="ppu" 
@@ -52,7 +52,7 @@
         </div>
       
         <div class="my-2">
-          <label class="my-2 col-start-2 grid" for="comienzoContenedor">Contenedor</label>
+          <label class="my-2 col-start-2 grid" for="comienzoContenedor">N° Contenedor</label>
           <input 
             type="text" 
             name="comienzoContenedor" 
@@ -71,7 +71,7 @@
         </div>
       
         <div class="my-2 col-start-2 grid">
-          <label for="sello">Sello</label>
+          <label for="sello">N° Sello</label>
           <input 
             type="text" 
             name="sello" 
@@ -83,7 +83,7 @@
         
       
         <div class="my-2 col-start-2 grid">
-          <label class="my-2" for="idConductor">Conductor</label>
+          <label class="my-2" for="idConductor">Nombre Conductor</label>
           <select id="idConductor" name="idConductor" required>
             <!-- Options for idConductor selection -->
             {% for e in conductores %}
