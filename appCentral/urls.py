@@ -4,7 +4,7 @@ from .views import MenuView, VerRegistrosView, NuevoRegistroView
 
 
 urlpatterns = [
-    path("menu/", MenuView.as_view(), name='menu'),
+    # path("menu/", MenuView.as_view(), name='menu'),
     path("registros/", VerRegistrosView.as_view(), name='registros'),
     path("registros/nuevo/", NuevoRegistroView.as_view(), name='nuevoRegistro'),
 ]

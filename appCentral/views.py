@@ -1,5 +1,5 @@
 from django.utils.decorators import method_decorator
-from appUsuarios.utils import token_requerido, firmar, filtrar_resultados
+from appUsuarios.utils import token_requerido, firmar
 from .models import Conductor, Camion, Registro
 from appUsuarios.models import Usuario
 from django.shortcuts import render, redirect
@@ -24,14 +24,11 @@ class VerRegistrosView(View):
     def get(self, request):
         _id = firmar(request)
         usuario = Usuario.objects.get(id=_id)
-        registros = Registro.objects.all()
+        if request.session["tracto"]:
+            registros = Registro.objects.filter(tracto=request.session["tracto"])
+        else:
+            registros = Registro.objects.all()
 
-        # if request.session["tracto"] != "":
-        #     registros = Registro.objects.filter(tracto=request.session["tracto"])
-        # else:
-        #     registros = Registro.objects.all()
-
-        # Agregando atributos necesarios para correcta visualización.
         for reg in registros:
             if reg.cargado == 0:
                 setattr(reg, "conductor", "{}".format(reg.idConductor.nombre))
@@ -41,7 +38,6 @@ class VerRegistrosView(View):
                 setattr(reg, "conductor", "{}".format(reg.idConductor.nombre))
                 setattr(reg, "camion", "{}".format(reg.idCamion.nombre))
                 setattr(reg, "estado", "Cargado")
-
         return render(request, 'registros.html', {
             "nombre":usuario.nombre,
             "registros":registros,
@@ -49,20 +45,14 @@ class VerRegistrosView(View):
     
     @method_decorator(token_requerido)
     def post(self, request):
-        print(request.POST)
-        if request.POST["tracto"] != "":
-            request.session["tracto"] = request.POST["tracto"]
-            return redirect("registros")
-        request.session["tracto"] = ""
+        request.session["tracto"] = request.POST["tracto"]
         return redirect("registros")
-        
-        # if request.POST["todo"] == "1":
-        #     request.session["tracto"] = ""
-        #     print("EJECUTADO")
 
 class NuevoRegistroView(View):
     @method_decorator(token_requerido)
     def get(self, request):
+        _id = firmar(request)
+        usuario = Usuario.objects.get(id=_id)
         # Junta algunos de los datos necesarios para completar el formulario.
         conductores = Conductor.objects.all()
         camiones = Camion.objects.all()
@@ -70,6 +60,7 @@ class NuevoRegistroView(View):
         firmado = firmar(request=request)
         autor = Usuario.objects.get(id=firmado)
         return render(request, 'nuevoRegistro.html', {
+            "nombre":usuario.nombre,
             "conductores":conductores,
             "camiones":camiones,
             "autor":autor,
