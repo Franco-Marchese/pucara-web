@@ -14,7 +14,7 @@ class MenuView(View):
         usuario = Usuario.objects.get(id=_id)
         # Retorna todas las opciones disponibles según el usuario.
         # FALTRA FILTRAR LAS ACCIONES DISPONIBLES.  
-        return render(request, "menu-base.html", {
+        return render(request, "menu.html", {
             "nombre":usuario.nombre,})
         
 
