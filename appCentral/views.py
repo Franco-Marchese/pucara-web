@@ -12,7 +12,7 @@ class MenuView(View):
     def get(self, request):
         # Retorna todas las opciones disponibles según el usuario.
         # FALTRA FILTRAR LAS ACCIONES DISPONIBLES.  
-        return render(request, "menu.html", {})
+        return render(request, "menu-base.html", {})
 
 class VerRegistrosView(View):
     registros = Registro.objects.all()
@@ -62,7 +62,7 @@ class NuevoRegistroView(View):
         # Obtiene los otros registros relacionados del formulario y firma.
         idConductor = Conductor.objects.get(id=request.POST["idConductor"])
         idCamion = Camion.objects.get(id=request.POST["idCamion"])
-        idUsuario = Usuario.objects.get(id=autor)
+        idUsuario = autor
         # Instancia el nuevo registro.
         nuevoRegistro = Registro.objects.create(
             tracto=tracto,
