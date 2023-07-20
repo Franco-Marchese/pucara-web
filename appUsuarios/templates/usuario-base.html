@@ -11,16 +11,21 @@
       {% tailwind_css %}
   </head>
   <header class="bg-white">
-    <nav class="mx-auto grid grid-cols-1 mb-6 justify-items-center md:flex md:max-w-7xl md:items-center md:justify-between md:p-6" aria-label="Global">
-        <div class="flex lg:flex-1 items-center justify-between">
-            <div class="flex items-center">
-                <img class="h-16 w-22" src="{% static 'img/pucara.png' %}" alt="pucara logo">
-            </div>
-            <div class="bg-amber-500 text-center px-4 py-2 rounded-md">
-              <a href="{% url 'egreso' %}" class="ml-4 font-semibold">Cerrar sesión</a>
-          </div>
-          
-        </div>
+    <nav class="bg-zinc-950 grid grid-cols-3 p-5">
+      <!--Identificador de usuario activo-->
+      <div class="flex items-center">
+          <p 
+          class="bg-zinc-400 text-white mx-6 px-8 rounded-lg"> {{ nombre }} </p>
+      </div>
+      <!--Logo de Pucara-->
+      <div>
+          <img alt="logo" src="{% static 'img\logo.jpg' %}" class="h-16 w-16 mx-auto rounded-3xl"/>
+      </div>
+      <!--Para cerrar sesión activa-->
+      <div class="flex justify-end items-center">
+          <a 
+          href="{% url 'egreso' %}" class="text-white mx-6"> Cerrar sesion </a>
+      </div>
     </nav>
 </header>
 
