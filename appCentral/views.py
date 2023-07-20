@@ -55,21 +55,31 @@ class NuevoRegistroView(View):
     
     @method_decorator(token_requerido)
     def post(self, request):
-        # Obtiene al autor del formulario por completaren base a la sesión iniciada.
+        # Obtiene al autor del formulario por completar en base a la sesión iniciada.
         firmado = firmar(request=request)
         autor = Usuario.objects.get(id=firmado)
         # Captura los valores sencillos del formulario.
         tracto = request.POST["tracto"]
-        cargado = request.POST.get("cargado", 0)
+        cargado = request.POST.get("cargado", "0")  # Cambiado 0 a "0" para mantener el tipo de dato.
         ppu = request.POST["ppu"]
-        sello = request.POST["sello"]
-        # Captura y procesa los valores complejos del formulario
-        baseFecha = request.POST["fecha"] # -> Pieza completa.
-        fecha = baseFecha.split("T")[0] # -> Separación.
-        hora = baseFecha.split("T")[1] # -> Separación.
-        contIni = request.POST["comienzoContenedor"] # -> Parte por unir.
-        contFin = request.POST["finalContenedor"] # -> Parte por unir.
-        contenedor = "{}-{}".format(contIni, contFin) # -> Pieza completa.
+        
+        # Obtiene y procesa los valores complejos del formulario.
+        baseFecha = request.POST["fecha"]
+        fecha = baseFecha.split("T")[0]
+        hora = baseFecha.split("T")[1]
+        
+        # si cargador = 0 el contenedor y el sello quedan vacion y si es 1
+        if cargado == "0":
+            contenedor = ""  # Contenedor vacío cuando cargado es igual a "0".
+            sello = ""  # Sello vacío cuando cargado es igual a "0".
+        else:
+            # Verificar si "comienzoContenedor" está presente en request.POST.
+            # Si no está presente recibe una cadena vacia
+            contIni = request.POST.get("comienzoContenedor", "")
+            contFin = request.POST.get("finalContenedor", "")
+            contenedor = "{}-{}".format(contIni, contFin)
+            sello = request.POST["sello"]
+        
         # Obtiene los otros registros relacionados del formulario y firma.
         idConductor = Conductor.objects.get(id=request.POST["idConductor"])
         idCamion = Camion.objects.get(id=request.POST["idCamion"])
