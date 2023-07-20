@@ -1,0 +1,26 @@
+{% extends 'central-base.html' %}
+{% load static %}
+
+{% block menu %}
+    <div class="px-4 py-6">
+        <div class="bg-zinc-400 h-2/3 text-center py-4">
+            <h3 class="text-2xl font-semibold"> ¿Qué acción desea realizar? </h3>
+            <div class="my-8 grid grid-cols-3">
+                <div class="col-start-2 grid">
+                    <a 
+                    href="{% url 'registros' %}"
+                    class="bg-white py-3 my-1.5 shadow-xl"
+                    > 
+                    Ver todos los registros 
+                    </a>
+                    <a 
+                    href="{% url 'usuarios' %}"
+                    class="bg-white py-3 my-1.5 shadow-xl"
+                    > 
+                    Ver todos los usuarios 
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
