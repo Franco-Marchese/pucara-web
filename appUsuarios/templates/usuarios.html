@@ -1,12 +1,24 @@
-<ul>
-    {% for e in usuarios %}
-    <div>
-        <li> 
-            {{ e.nombre }} 
-        </li>
-        <a href="{% url 'eliminar' e.id %}">
+{% extends 'usuario-base.html' %}
+{% load static %}
+
+{% block usuarios %}
+<div class="flex my-18 items-center justify-center px-4 py-12 sm:px-6 lg:px-8 border border-gray-300 rounded-md">
+    <div class="w-full max-w-sm space-y-10">
+      <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Control de usuarios</h2>
+      <ul>
+        {% for e in usuarios %}
+        <div class="flex items-center justify-between p-4">
+          <li class="font-semibold">{{ e.nombre }}</li>
+          <a href="{% url 'eliminar' e.id %}" class="bg-amber-500 text-white px-4 py-2 rounded-md">
             Eliminar
-        </a>
+          </a>
+        </div>
+        {% endfor %}
+      </ul>
     </div>
-    {% endfor %}
-</ul>
+  </div>
+  
+  
+{% endblock %}
+
+

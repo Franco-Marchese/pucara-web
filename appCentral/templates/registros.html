@@ -1,3 +1,60 @@
+{% extends 'central-base.html' %}
+{% load static %}
+
+{% block menu %}
+    <div class="px-4 py-6">
+        <div class="bg-zinc-400 h-2/3 text-center py-4">
+            <div>
+                <h3 class="text-2xl font-semibold"> Registros </h3>
+                <p> Lorem ipsum. </p>
+            </div>
+            <div>
+                <h3 class="text-2xl font-semibold"> Filtrar registros </h3>
+                <form action="." method="POST">
+                    <input/>
+                </form>
+            </div>
+            <div>
+                <table class="min-w-full divide-y divide-gray-300">
+                    <thead>
+                      <tr>
+                        <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">Encargado</th>
+                        <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">Titulo</th>
+                        <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">Descripcion</th>
+                        <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Estado</th>
+                        <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-3">
+                          <span class="sr-only">Completar</span>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody class="bg-white">
+                    {% for e in tasks %}
+                      {% if e.isdone == 'No completado'%}
+                      <tr class="even:bg-gray-50">
+                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3"> {{ e.incharge }} </td>
+                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3"> {{ e.tasktitle }} </td>
+                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3"> {{ e.taskdescription }} </td>
+                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {{ e.isdone }} </td>
+                        <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
+                          <form action="{{ e.title }}" method="POST">
+                            {% csrf_token %}
+                            <input class="hidden" id="id" name="titulo" value="{{ e.tasktitle }}"></input>
+                            <button type='submit'> Cerrar tarea </button>
+                          </form>
+                        </td>
+                      </tr>
+                      {% endif %}
+                    {% endfor %}
+                    </tbody>
+                  </table>
+                  <a href="{% url 'nuevoRegistro' %}">
+                    Crear un registro!
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
 <h1>
     Formulario para filtrar resultados.
 </h1>

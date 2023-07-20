@@ -1,3 +1,7 @@
+{% extends 'usuario-base.html' %}
+{% load static %}
+
+{% block registros_usuarios %}
 <form action="." method="POST">
     {% csrf_token %}
     <input 
@@ -36,3 +40,4 @@
         Registrar
     </button>
 </form>
+{% endblock %}
