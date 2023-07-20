@@ -10,16 +10,27 @@ import pandas as pd
 class MenuView(View):
     @method_decorator(token_requerido)
     def get(self, request):
+        _id = firmar(request)
+        usuario = Usuario.objects.get(id=_id)
         # Retorna todas las opciones disponibles según el usuario.
         # FALTRA FILTRAR LAS ACCIONES DISPONIBLES.  
-        return render(request, "menu.html", {})
+        return render(request, "menu-base.html", {
+            "nombre":usuario.nombre,})
+        
 
 class VerRegistrosView(View):
     registros = Registro.objects.all()
+    # reg = registros.first()
 
     @method_decorator(token_requerido)
     def get(self, request):
+        _id = firmar(request)
+        usuario = Usuario.objects.get(id=_id)
+        # cabecillas = len(self.reg_meta.fields)
+
+
         return render(request, 'registros.html', {
+            "nombre":usuario.nombre,
             "registros":self.registros,
         })
     
@@ -62,7 +73,7 @@ class NuevoRegistroView(View):
         # Obtiene los otros registros relacionados del formulario y firma.
         idConductor = Conductor.objects.get(id=request.POST["idConductor"])
         idCamion = Camion.objects.get(id=request.POST["idCamion"])
-        idUsuario = Usuario.objects.get(id=autor)
+        idUsuario = autor
         # Instancia el nuevo registro.
         nuevoRegistro = Registro.objects.create(
             tracto=tracto,
