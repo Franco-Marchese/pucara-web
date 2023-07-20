@@ -1,10 +1,10 @@
 from django.utils.decorators import method_decorator
-from appUsuarios.utils import token_requerido, firmar
+from appUsuarios.utils import token_requerido, firmar, filtrar_resultados
 from .models import Conductor, Camion, Registro
 from appUsuarios.models import Usuario
 from django.shortcuts import render, redirect
 from django.views import View
-import pandas as pd
+from datetime import datetime
 
 # Create your views here.
 class MenuView(View):
@@ -20,36 +20,45 @@ class MenuView(View):
         
 
 class VerRegistrosView(View):
-    registros = Registro.objects.all()
-    # reg = registros.first()
-
     @method_decorator(token_requerido)
     def get(self, request):
         _id = firmar(request)
         usuario = Usuario.objects.get(id=_id)
         registros = Registro.objects.all()
-        for registro in registros:
-            print(f"id objeto: {registro.id}:")
-            print(f"Tracto: {registro.tracto}")
-            print(f"Cargado: {registro.cargado}")
-            print(f"Hora: {registro.hora}")
-            print(f"Fecha: {registro.fecha}")
-            print(f"PPU: {registro.ppu}")
-            print(f"Contenedor: {registro.contenedor}")
-            print(f"Sello: {registro.sello}")
-            print(f"Conductor: {registro.idConductor}")
-            print(f"Camion: {registro.idCamion}")
-            print(f"Usuario: {registro.idUsuario}")
-        # cabecillas = len(self.reg_meta.fields)
+
+        # if request.session["tracto"] != "":
+        #     registros = Registro.objects.filter(tracto=request.session["tracto"])
+        # else:
+        #     registros = Registro.objects.all()
+
+        # Agregando atributos necesarios para correcta visualización.
+        for reg in registros:
+            if reg.cargado == 0:
+                setattr(reg, "conductor", "{}".format(reg.idConductor.nombre))
+                setattr(reg, "camion", "{}".format(reg.idCamion.nombre))
+                setattr(reg, "estado", "Vacío")
+            else:
+                setattr(reg, "conductor", "{}".format(reg.idConductor.nombre))
+                setattr(reg, "camion", "{}".format(reg.idCamion.nombre))
+                setattr(reg, "estado", "Cargado")
 
         return render(request, 'registros.html', {
             "nombre":usuario.nombre,
-            "registros":self.registros,
+            "registros":registros,
         })
     
     @method_decorator(token_requerido)
     def post(self, request):
-        pass
+        print(request.POST)
+        if request.POST["tracto"] != "":
+            request.session["tracto"] = request.POST["tracto"]
+            return redirect("registros")
+        request.session["tracto"] = ""
+        return redirect("registros")
+        
+        # if request.POST["todo"] == "1":
+        #     request.session["tracto"] = ""
+        #     print("EJECUTADO")
 
 class NuevoRegistroView(View):
     @method_decorator(token_requerido)
@@ -57,7 +66,7 @@ class NuevoRegistroView(View):
         # Junta algunos de los datos necesarios para completar el formulario.
         conductores = Conductor.objects.all()
         camiones = Camion.objects.all()
-        # Obtiene al autor del formulario por completaren base a la sesión iniciada.
+        # Obtiene al autor del formulario por completar en base a la sesión iniciada.
         firmado = firmar(request=request)
         autor = Usuario.objects.get(id=firmado)
         return render(request, 'nuevoRegistro.html', {
@@ -75,13 +84,9 @@ class NuevoRegistroView(View):
         tracto = request.POST["tracto"]
         cargado = request.POST.get("cargado", "0")  # Cambiado 0 a "0" para mantener el tipo de dato.
         ppu = request.POST["ppu"]
-        
-        # Obtiene y procesa los valores complejos del formulario.
-        baseFecha = request.POST["fecha"]
-        fecha = baseFecha.split("T")[0]
-        hora = baseFecha.split("T")[1]
-        
-        # si cargador = 0 el contenedor y el sello quedan vacios y si es 1 hay que rellenar el contenedor y el sello
+        fecha = datetime.now().date()
+        hora = datetime.now().time()              
+        # Valida si el camión esta cargado para completar el contenedor y el sello.
         if cargado == "0":
             contenedor = ""  # Contenedor vacío cuando cargado es igual a "0".
             sello = ""  # Sello vacío cuando cargado es igual a "0".
@@ -101,7 +106,7 @@ class NuevoRegistroView(View):
         nuevoRegistro = Registro.objects.create(
             tracto=tracto,
             cargado=int(cargado),
-            hora=hora,
+            hora=str(hora).split(".")[0],
             fecha=fecha,
             ppu=ppu,
             contenedor=contenedor,

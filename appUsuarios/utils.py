@@ -1,6 +1,8 @@
 from django.shortcuts import redirect
 from .models import Usuario
 from pucaraweb.settings import SECRET_KEY
+from functools import reduce
+import pandas as pd
 import hashlib
 import jwt
 
@@ -42,6 +44,25 @@ def firmar(request):
     token = request.COOKIES["token"]
     firma = jwt.decode(token, SECRET_KEY, algorithms="HS256")
     return firma["id"]
+
+def filtrar_resultados(**kwargs):
+    print("FUNCION ACTIVATA")
+    qset = kwargs.get("qset", None)
+    if qset is not None:
+        data = list(qset.values())
+        df = pd.DataFrame(data)
+        print(df)
+        filtros = {
+            "tracto":int(kwargs.get("tracto", None)),
+            "fecha":kwargs.get("fecha", None),
+            "hora":kwargs.get("hora", None),
+        }
+        # df[["tracto", "fecha", "hora"]] = df[["tracto", "fecha", "hora"]].apply(str)
+        condiciones = [df[col] == value for col, value in filtros.items()]
+        print("CONDICION: {}".format(condiciones))
+        return "LLAMADO CORRECTAMENTE"
+    else:
+        return "FALLO EL QSET"
 
 def token_requerido(metodo_vista):
     def vista_envuelta(request, *args, **kwargs):
