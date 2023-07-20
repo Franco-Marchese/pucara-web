@@ -12,6 +12,7 @@ class MenuView(View):
     def get(self, request):
         _id = firmar(request)
         usuario = Usuario.objects.get(id=_id)
+        
         # Retorna todas las opciones disponibles según el usuario.
         # FALTRA FILTRAR LAS ACCIONES DISPONIBLES.  
         return render(request, "menu.html", {
@@ -26,8 +27,20 @@ class VerRegistrosView(View):
     def get(self, request):
         _id = firmar(request)
         usuario = Usuario.objects.get(id=_id)
+        registros = Registro.objects.all()
+        for registro in registros:
+            print(f"id objeto: {registro.id}:")
+            print(f"Tracto: {registro.tracto}")
+            print(f"Cargado: {registro.cargado}")
+            print(f"Hora: {registro.hora}")
+            print(f"Fecha: {registro.fecha}")
+            print(f"PPU: {registro.ppu}")
+            print(f"Contenedor: {registro.contenedor}")
+            print(f"Sello: {registro.sello}")
+            print(f"Conductor: {registro.idConductor}")
+            print(f"Camion: {registro.idCamion}")
+            print(f"Usuario: {registro.idUsuario}")
         # cabecillas = len(self.reg_meta.fields)
-
 
         return render(request, 'registros.html', {
             "nombre":usuario.nombre,
