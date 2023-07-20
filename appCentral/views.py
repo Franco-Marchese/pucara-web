@@ -68,12 +68,12 @@ class NuevoRegistroView(View):
         fecha = baseFecha.split("T")[0]
         hora = baseFecha.split("T")[1]
         
-        # si cargador = 0 el contenedor y el sello quedan vacion y si es 1
+        # si cargador = 0 el contenedor y el sello quedan vacios y si es 1 hay que rellenar el contenedor y el sello
         if cargado == "0":
             contenedor = ""  # Contenedor vacío cuando cargado es igual a "0".
             sello = ""  # Sello vacío cuando cargado es igual a "0".
         else:
-            # Verificar si "comienzoContenedor" está presente en request.POST.
+            # Verificar si comienzoContenedor está presente en request.POST
             # Si no está presente recibe una cadena vacia
             contIni = request.POST.get("comienzoContenedor", "")
             contFin = request.POST.get("finalContenedor", "")
