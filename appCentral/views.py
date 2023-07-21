@@ -24,7 +24,8 @@ class VerRegistrosView(View):
     def get(self, request):
         _id = firmar(request)
         usuario = Usuario.objects.get(id=_id)
-        if request.session["tracto"]:
+        tracto=request.session.get("tracto",None)
+        if tracto:
             registros = Registro.objects.filter(tracto=request.session["tracto"])
         else:
             registros = Registro.objects.all()
