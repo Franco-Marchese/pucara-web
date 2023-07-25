@@ -4,15 +4,44 @@
 {% block menu %}
   
     <div class="mx-5 py-6 h-screen">
-      <div class="bg-zinc-400 h-2/3 text-center py-4 ">
+      <div class="bg-zinc-400 h-2/3">
         <!--Introducción-->
-        <div>
+        <div class="grid grid-cols-2">
+          <div>
             <h3 class="text-2xl font-semibold"> Registros </h3>
-            <p> Lorem ipsum. </p>
+            <p>
+              Puedes navegar entre los registros de camiones realizados normalmente ordenados desde el más reciente al más lejano.
+            </p>
+            <p>
+              Si lo que buscas en ingresar un nuevo registro, puedes observar ingresar al formulario con la pestaña de la derecha de la pantalla.
+            </p>
+          </div>
+          <div class=" grid grid-cols-2 gap-2 mr-3 max-h-7">
+            {% if usuario.es_admin == "1" %}
+            <p 
+            class="col-start-1 bg-yellow-400 py-2 text-center text-zinc-950 font-medium rounded-b-xl shadow-yellow-800 shadow-md hover:shadow-yellow-600 hover:shadow-lg">
+              <a href="{% url "registrar" %}">
+                Accede aquí al control de usuarios!
+              </a>
+            </p>
+            {% endif %}
+            <p 
+            class="col-start-2 bg-yellow-400 py-2 text-center text-zinc-950 font-medium rounded-b-xl shadow-yellow-800 shadow-md hover:shadow-yellow-600 hover:shadow-lg">
+              <a href="{% url 'nuevoRegistro' %}">
+                Crear un registro!
+              </a>
+            </p>
+          </div>
         </div>
         <!--Filtro de registros-->
         <div>
             <h3 class="text-2xl font-semibold"> Filtrar registros </h3>
+              <p>
+                Si buscas algo más particular, puedes filtrar según el número del tracto que estes buscando.
+              </p>
+              <p>
+                Para volver a ver todos los registros solo debes volver a presionar filtrar sin haber indicado ningún tracto.
+              </p>
             <form 
             action="." 
             method="POST"
@@ -49,12 +78,9 @@
               Filtrar
               </button>     
             </form>
-            <a href="{% url 'nuevoRegistro' %}">
-              Crear un registro!
-            </a>
         </div>
         <!--Tabla de los registros-->
-        <div class="bg-zinc-400 h-3/4 text-center py-4 px-6">
+        <div class="bg-zinc-400 h-3/4 text-center py-4 px-6 overflow-scroll">
           <table class="min-w-full divide-y divide-gray-300">
             <thead>
               <tr>
