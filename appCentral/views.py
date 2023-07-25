@@ -5,31 +5,17 @@ from appUsuarios.models import Usuario
 from django.shortcuts import render, redirect
 from django.views import View
 from datetime import datetime
-
-# Create your views here.
-class MenuView(View):
-    @method_decorator(token_requerido)
-    def get(self, request):
-        _id = firmar(request)
-        usuario = Usuario.objects.get(id=_id)
         
-        # Retorna todas las opciones disponibles según el usuario.
-        # FALTRA FILTRAR LAS ACCIONES DISPONIBLES.  
-        return render(request, "menu.html", {
-            "nombre":usuario.nombre,})
-        
-
 class VerRegistrosView(View):
     @method_decorator(token_requerido)
     def get(self, request):
         _id = firmar(request)
         usuario = Usuario.objects.get(id=_id)
-        tracto=request.session.get("tracto",None)
-        if tracto:
-            registros = Registro.objects.filter(tracto=request.session["tracto"])
+        tracto = request.session.get("tracto", None)
+        if tracto is not None:
+            registros = Registro.objects.filter(tracto=tracto)
         else:
             registros = Registro.objects.all()
-
         for reg in registros:
             if reg.cargado == 0:
                 setattr(reg, "conductor", "{}".format(reg.idConductor.nombre))
@@ -40,13 +26,18 @@ class VerRegistrosView(View):
                 setattr(reg, "camion", "{}".format(reg.idCamion.nombre))
                 setattr(reg, "estado", "Cargado")
         return render(request, 'registros.html', {
-            "nombre":usuario.nombre,
+            "usuario":usuario,
             "registros":registros,
         })
     
     @method_decorator(token_requerido)
     def post(self, request):
-        request.session["tracto"] = request.POST["tracto"]
+        tracto = request.POST.get("tracto", "")
+        if tracto != "":
+            request.session["tracto"] = tracto
+            print(request.session["tracto"])
+            return redirect("registros")
+        request.session["tracto"] = None
         return redirect("registros")
 
 class NuevoRegistroView(View):
@@ -61,7 +52,7 @@ class NuevoRegistroView(View):
         firmado = firmar(request=request)
         autor = Usuario.objects.get(id=firmado)
         return render(request, 'nuevoRegistro.html', {
-            "nombre":usuario.nombre,
+            "usuario":usuario,
             "conductores":conductores,
             "camiones":camiones,
             "autor":autor,
