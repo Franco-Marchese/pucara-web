@@ -91,5 +91,5 @@ class EliminarView(View):
         idSeleccionado = Usuario.objects.get(id=id)
         # Elimina al usuario encontrado.
         idSeleccionado.delete()
-        return redirect("usuarios")
+        return redirect('usuarios')
         
