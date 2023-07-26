@@ -16,6 +16,7 @@ class VerRegistrosView(View):
             registros = Registro.objects.filter(tracto=tracto)
         else:
             registros = Registro.objects.all()
+        
         for reg in registros:
             if reg.cargado == 0:
                 setattr(reg, "conductor", "{}".format(reg.idConductor.nombre))
@@ -25,19 +26,23 @@ class VerRegistrosView(View):
                 setattr(reg, "conductor", "{}".format(reg.idConductor.nombre))
                 setattr(reg, "camion", "{}".format(reg.idCamion.nombre))
                 setattr(reg, "estado", "Cargado")
+        
         return render(request, 'registros.html', {
-            "usuario":usuario,
-            "registros":registros,
+            "usuario": usuario,
+            "registros": registros,
         })
+
     
     @method_decorator(token_requerido)
     def post(self, request):
         tracto = request.POST.get("tracto", "")
+        print ("///////BANDERA A")
         if tracto != "":
             request.session["tracto"] = tracto
-            print(request.session["tracto"])
+            print ("///////BANDERA B")
             return redirect("registros")
         request.session["tracto"] = None
+        print ("///////BANDERA C")
         return redirect("registros")
 
 class NuevoRegistroView(View):
