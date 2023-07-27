@@ -19,17 +19,16 @@
     </div>
     <!--Logo de Pucara-->
     <div>
-        <img 
-        alt="logo" 
-        src="{% static 'img\logo.jpg' %}"
-        class="h-16 w-16 mx-auto rounded-3xl"
-        />
+        <img alt="logo" src=" {% static 'img\logo.jpg' %}" class="h-16 w-16 mx-auto rounded-3xl"/>
     </div>
     <!--Para cerrar sesión activa-->
     <div class="flex justify-end items-center">
         <a 
         href="{% url 'egreso' %}"
         class="text-white mx-6"> Cerrar sesion </a>
+        <a 
+          href="{% url 'registros' %}"
+          class="text-white mx-6"> Inicio </a>
     </div>
   </nav>
   <body>
