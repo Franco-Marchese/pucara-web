@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-m9fz=i5e--@je)2jslrml#=)=zmc^07)x+88gc39bhstw1p@bm"
+SECRET_KEY = "django-insecure-)be*#+m=7u@y4o50^iu(()20hx^zqi4%5cth*e0i+t&5^068fl"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,22 +37,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "tailwind",
-    "theme",
-    "django_browser_reload",
-    "appCentral",
-    "appUsuarios",
 ]
-
-TAILWIND_APP_NAME = "theme"
-
-NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "django_browser_reload.middleware.BrowserReloadMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
@@ -85,12 +75,8 @@ WSGI_APPLICATION = "pucaraweb.wsgi.application"
 
 DATABASES = {
     "default": {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'pucara',
-        'USER': 'root',
-        'PASSWORD': 'ottotorapilontai',
-        'HOST': 'localhost',
-        'PORT': '',
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
@@ -123,11 +109,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = "theme/static/"
+STATIC_URL = "static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-# AUTH_USER_MODEL = "appUsuarios.Usuario"

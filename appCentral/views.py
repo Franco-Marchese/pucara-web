@@ -5,6 +5,10 @@ from appUsuarios.models import Usuario
 from django.shortcuts import render, redirect
 from django.views import View
 from datetime import datetime
+# Para poblar.
+import random
+from datetime import datetime, timedelta
+from django.utils import timezone
         
 class VerRegistrosView(View):
     @method_decorator(token_requerido)
@@ -89,7 +93,6 @@ class NuevoRegistroView(View):
         # Obtiene los otros registros relacionados del formulario y firma.
         idConductor = Conductor.objects.get(id=request.POST["idConductor"])
         idCamion = Camion.objects.get(id=request.POST["idCamion"])
-        idUsuario = autor
         # Instancia el nuevo registro.
         nuevoRegistro = Registro.objects.create(
             tracto=tracto,
@@ -101,8 +104,44 @@ class NuevoRegistroView(View):
             sello=sello,
             idConductor=idConductor,
             idCamion=idCamion,
-            idUsuario=idUsuario,
         )
         # Guarda el nuevo registro.
         nuevoRegistro.save()
         return redirect("registros")
+
+class PoblandoView(View):
+    def get(self, request):
+        # Get the list of available conductors and camions from the database
+        conductors = Conductor.objects.all()
+        camions = Camion.objects.all()
+
+        # Generate 4200 rows for the Registro model
+        for _ in range(4200):
+            # Sample data for the row
+            tracto = random.randint(1, 1000)
+            cargado = random.choice([True, False])
+            hora = f"{random.randint(0, 23):02d}:{random.randint(0, 59):02d}"
+            fecha = (timezone.now() - timedelta(days=random.randint(1, 365))).strftime('%Y-%m-%d')
+            ppu = ''.join(random.choice('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789') for _ in range(6))
+            contenedor = f"{random.randint(1000000000, 9999999999)}-{random.randint(1, 9)}"
+            sello = f"fgdf{random.randint(1000, 9999)}"
+
+            # Randomly select conductor and camion from the available choices
+            conductor = random.choice(conductors)
+            camion = random.choice(camions)
+
+            # Create the Registro object and save it to the database
+            registro = Registro(
+                tracto=tracto,
+                cargado=cargado,
+                hora=hora,
+                fecha=fecha,
+                ppu=ppu,
+                contenedor=contenedor,
+                sello=sello,
+                idConductor=conductor,
+                idCamion=camion,
+            )
+            registro.save()
+
+        return redirect("ingreso")
