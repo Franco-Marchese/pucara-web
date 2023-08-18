@@ -1,5 +1,5 @@
 from django.utils.decorators import method_decorator
-from appUsuarios.utils import token_requerido, firmar
+from appUsuarios.utils import token_requerido, Usuarios
 from .models import Conductor, Camion, Registro
 from appUsuarios.models import Usuario
 from django.shortcuts import render, redirect
@@ -11,42 +11,41 @@ from datetime import datetime, timedelta
 from django.utils import timezone
         
 class VerRegistrosView(View):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.u = Usuarios()
+
     @method_decorator(token_requerido)
     def get(self, request):
-        _id = firmar(request)
-        usuario = Usuario.objects.get(id=_id)
+        usuario = self.u.infoPersonal(request)
         tracto = request.session.get("tracto", None)
-        if tracto is not None:
-            registros = Registro.objects.filter(tracto=tracto)
-        else:
-            registros = Registro.objects.all()
+        # if tracto is not None:
+        #     registros = Registro.objects.filter(tracto=tracto)
+        # else:
+        #     registros = Registro.objects.all()
         
-        for reg in registros:
-            if reg.cargado == 0:
-                setattr(reg, "conductor", "{}".format(reg.idConductor.nombre))
-                setattr(reg, "camion", "{}".format(reg.idCamion.nombre))
-                setattr(reg, "estado", "Vacío")
-            else:
-                setattr(reg, "conductor", "{}".format(reg.idConductor.nombre))
-                setattr(reg, "camion", "{}".format(reg.idCamion.nombre))
-                setattr(reg, "estado", "Cargado")
+        # for reg in registros:
+        #     if reg.cargado == 0:
+        #         setattr(reg, "conductor", "{}".format(reg.idConductor.nombre))
+        #         setattr(reg, "camion", "{}".format(reg.idCamion.nombre))
+        #         setattr(reg, "estado", "Vacío")
+        #     else:
+        #         setattr(reg, "conductor", "{}".format(reg.idConductor.nombre))
+        #         setattr(reg, "camion", "{}".format(reg.idCamion.nombre))
+        #         setattr(reg, "estado", "Cargado")
         
         return render(request, 'registros.html', {
             "usuario": usuario,
-            "registros": registros,
         })
 
     
     @method_decorator(token_requerido)
     def post(self, request):
         tracto = request.POST.get("tracto", "")
-        print ("///////BANDERA A")
         if tracto != "":
             request.session["tracto"] = tracto
-            print ("///////BANDERA B")
             return redirect("registros")
         request.session["tracto"] = None
-        print ("///////BANDERA C")
         return redirect("registros")
 
 class NuevoRegistroView(View):
