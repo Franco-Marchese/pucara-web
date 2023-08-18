@@ -74,7 +74,7 @@
               <label for="finalContenedor" class="px-2">-</label>
               <div>
                 <input 
-                  class="rounded-md px-2  w-2 text-center "
+                  class="rounded-md px-2  w-8 text-center "
                   type="text" 
                   name="finalContenedor" 
                   required 
@@ -167,21 +167,15 @@
       <!--funcion en javascript para que cuando el camion no vaya cargado no se pueda escribir el n° del contenedor y el n° de sello-->
       <script>
         const cargado = document.getElementById('cargado');
-        const comienzoContenedor = document.getElementById('comienzoContenedor');
-        const finalContenedor = document.getElementById('finalContenedor');
         const sello = document.getElementById('sello');
       
         cargado.addEventListener('change', () => {
           if (cargado.checked) {
             // Si el cargado está marcado (cargado es igual a 1), habilitar los campos
-            comienzoContenedor.disabled = false;
-            finalContenedor.disabled = false;
             sello.disabled = false;
           } else {
             // Si el cargado no está marcado (cargado es igual a 0), deshabilitar los campos
-            comienzoContenedor.disabled = true;
             sello.disabled = true;
-            finalContenedor.disabled = true;
           }
         });
       </script>

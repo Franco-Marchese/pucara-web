@@ -24,10 +24,10 @@
       <!--Para cerrar sesión activa-->
       <div class="flex justify-end items-center">
           <a 
-          href="{% url 'egreso' %}" class="text-white mx-6"> Cerrar sesion </a>
+          href="{% url 'egreso' %}" class=" mx-3  bg-white py-3 px-6 text-center text-zinc-950 font-medium rounded-lg shadow-md "> Cerrar sesion </a>
           <a 
           href="{% url 'registros' %}"
-          class="text-white mx-6"> Inicio </a>
+          class="mx-3  bg-white py-3 px-6 text-center text-zinc-950 font-medium rounded-lg shadow-md mx-6"> Inicio </a>
       </div>
     </nav>
 </header>
@@ -48,8 +48,10 @@
 
     </div>
   </body>
-  <footer class="bg-zinc-950  p-5 bottom-0">
+  <footer class="bottom-0">
     <!--link de redes de sociales-->
-    <p class="mt-10 text-center text-xs leading-5 text-gray-400 font-semibold">&copy;Pucara Ltda, Chile</p>
+    <div class="bg-zinc-950 h-24 ">
+      <p class="mt-10 text-center text-xs leading-5 text-gray-400 font-semibold p-10">&copy;Pucara Ltda, Chile</p>
+    </div>
   </footer>
 </html>
