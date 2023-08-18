@@ -22,5 +22,3 @@ class Registro(models.Model):
 
     idConductor = models.ForeignKey(Conductor, on_delete=models.CASCADE)
     idCamion = models.ForeignKey(Camion, on_delete=models.CASCADE)
-    idUsuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-
