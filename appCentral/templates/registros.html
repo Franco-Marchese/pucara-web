@@ -42,9 +42,11 @@
               </p>
               <form action="." method="POST" class="flex items-center">
                 {% csrf_token %}
-                <label for="tracto" class="mr-2 font-semibold">N° Tracto:</label>
-                <input type="text" name="tracto" placeholder="Ingrese el número de tracto"maxlength="4"
+                <label for="tracto" class="mr-2 font-semibold">N° Tracto</label>
+                <div class="mx-2 ">
+                  <input type="text" name="tracto" placeholder="Ingrese el número de tracto"maxlength="4" class="rounded-md"
                 >
+                </div>
                 {% comment %} 
                 <div class="ml-4 my-2"> <!-- Agregamos una clase de margen a la izquierda -->
                   <label for="todo">Volver a mostrar todo</label>
