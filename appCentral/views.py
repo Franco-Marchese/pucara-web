@@ -51,14 +51,15 @@ class VerRegistrosView(View):
 class NuevoRegistroView(View):
     @method_decorator(token_requerido)
     def get(self, request):
-        _id = firmar(request)
+        userinstance = Usuarios()
+        infouser = userinstance.infoPersonal(request)
+        _id = infouser.id
         usuario = Usuario.objects.get(id=_id)
         # Junta algunos de los datos necesarios para completar el formulario.
         conductores = Conductor.objects.all()
         camiones = Camion.objects.all()
         # Obtiene al autor del formulario por completar en base a la sesión iniciada.
-        firmado = firmar(request=request)
-        autor = Usuario.objects.get(id=firmado)
+        autor = Usuario.objects.get(id=_id)
         return render(request, 'nuevoRegistro.html', {
             "usuario":usuario,
             "conductores":conductores,
@@ -69,8 +70,10 @@ class NuevoRegistroView(View):
     @method_decorator(token_requerido)
     def post(self, request):
         # Obtiene al autor del formulario por completar en base a la sesión iniciada.
-        firmado = firmar(request=request)
-        autor = Usuario.objects.get(id=firmado)
+        userinstance = Usuarios()
+        infouser = userinstance.infoPersonal(request)
+        _id = infouser.id
+        autor = Usuario.objects.get(id=_id)
         # Captura los valores sencillos del formulario.
         tracto = request.POST["tracto"]
         cargado = request.POST.get("cargado", "0")  # Cambiado 0 a "0" para mantener el tipo de dato.
