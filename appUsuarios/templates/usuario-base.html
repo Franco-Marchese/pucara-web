@@ -22,12 +22,15 @@
           <img alt="logo" src="{% static 'img\logo.jpg' %}" class="h-16 w-16 mx-auto rounded-3xl"/>
       </div>
       <!--Para cerrar sesión activa-->
+      
       <div class="flex justify-end items-center">
+          {% if user.is_authenticated %}
           <a 
           href="{% url 'egreso' %}" class=" mx-3  bg-white py-3 px-6 text-center text-zinc-950 font-medium rounded-lg shadow-md "> Cerrar sesion </a>
           <a 
           href="{% url 'registros' %}"
           class="mx-3  bg-white py-3 px-6 text-center text-zinc-950 font-medium rounded-lg shadow-md mx-6"> Inicio </a>
+          {% endif %}
       </div>
     </nav>
 </header>
@@ -51,7 +54,7 @@
   <footer class="bottom-0">
     <!--link de redes de sociales-->
     <div class="bg-zinc-950 h-24 ">
-      <p class="mt-10 text-center text-xs leading-5 text-gray-400 font-semibold p-10">&copy;Pucara Ltda, Chile</p>
+      <p class="mt-10 text-center text-xs text-gray-400 font-semibold p-10">&copy;Pucara Ltda, Chile</p>
     </div>
   </footer>
 </html>
