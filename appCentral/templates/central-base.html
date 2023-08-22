@@ -14,7 +14,8 @@
     <!--Identificador de usuario activo y barra de navegación-->
     <div class="flex items-center">
       <p 
-      class="bg-zinc-400 text-white mx-6 px-8 rounded-lg"> {{ usuario.nombre }} 
+      class="bg-zinc-400 text-white mx-6 px-8 rounded-lg">
+      {{ usuario.nombre }} 
       </p>
     </div>
     <!--Logo de Pucara-->
@@ -22,13 +23,13 @@
         <img alt="logo" src=" {% static 'img\logo.jpg' %}" class="h-16 w-16 mx-auto rounded-3xl"/>
     </div>
     <!--Para cerrar sesión activa-->
-    <div class="flex justify-end items-center">
-      <a 
-      href="{% url 'egreso' %}" class=" mx-3  bg-white py-3 px-6 text-center text-zinc-950 font-medium rounded-lg shadow-md "> Cerrar sesion </a>
-      <a 
-      href="{% url 'registros' %}"
-      class="mx-3  bg-white py-3 px-6 text-center text-zinc-950 font-medium rounded-lg shadow-md mx-6"> Inicio </a>
-    </div>
+      <div class="flex justify-end items-center">
+        <a 
+        href="{% url 'egreso' %}" class=" mx-3  bg-white py-3 px-6 text-center text-zinc-950 font-medium rounded-lg shadow-md "> Cerrar sesion </a>
+        {% comment %} <a 
+        href="{% url 'registros' %}"
+        class="bg-white py-3 px-6 text-center text-zinc-950 font-medium rounded-lg shadow-md mx-6"> Inicio </a> {% endcomment %}
+      </div>
   </nav>
   <body>
     <div class="#">

@@ -38,7 +38,6 @@ class VerRegistrosView(View):
             "usuario": usuario,
         })
 
-    
     @method_decorator(token_requerido)
     def post(self, request):
         tracto = request.POST.get("tracto", "")
@@ -49,12 +48,13 @@ class VerRegistrosView(View):
         return redirect("registros")
 
 class NuevoRegistroView(View):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.u = Usuarios()
+
     @method_decorator(token_requerido)
     def get(self, request):
-        userinstance = Usuarios()
-        infouser = userinstance.infoPersonal(request)
-        _id = infouser.id
-        usuario = Usuario.objects.get(id=_id)
+        usuario = self.u.infoPersonal(request)
         # Junta algunos de los datos necesarios para completar el formulario.
         conductores = Conductor.objects.all()
         camiones = Camion.objects.all()

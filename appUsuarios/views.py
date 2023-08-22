@@ -41,7 +41,10 @@ class RegistrarView(View):
 
     @method_decorator(token_requerido)
     def get(self, request):
-        return render(request, 'registro.html', {})
+        usuario = self.u.infoPersonal(request)
+        return render(request, 'registro.html', {
+            "usuario":usuario,
+        })
     
     @method_decorator(token_requerido)
     def post(self, request):
@@ -63,7 +66,10 @@ class UsuariosView(View):
     def get(self, request):
         # Puede devolver una lista de usuarios completa o filtrada.
         usuarios = self.u.todoUsuario()
+        usuario = self.u.infoPersonal(request)
+
         return render(request, 'usuarios.html', {
+            "usuario":usuario,
             "usuarios":usuarios,
         })
 
