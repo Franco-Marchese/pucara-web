@@ -3,79 +3,65 @@
 
 {% block menu %}
 <div class="mx-5 py-6 h-screen">
-  <div class="bg-zinc-400 h-2/3">
+  <div class="">
     <!--Introducción-->
     <div class="grid grid-cols-2 px-3">
       <div class="py-2">
-        <h3 class="text-2xl font-bold"> Registros </h3>
-        <p>
-          Puedes navegar entre los registros de camiones realizados normalmente ordenados desde el más reciente al más lejano.
-        </p>
-        <p>
-          Si lo que buscas en ingresar un nuevo registro, puedes observar ingresar al formulario con la pestaña de la derecha de la pantalla.
-        </p>
+        <h3 class="text-4xl font-semibold"> Registros </h3>
       </div>
-      <div class="grid grid-cols-2 gap-2 max-h-7">
+      <div class="grid gap-2 grid-cols-3 grid-rows-2 my-2">
         {% if usuario.es_admin == "1" %}
-        <p class="col-span-2 md:col-span-1 bg-yellow-400 py-2 text-center text-zinc-950 font-medium rounded-b-xl shadow-yellow-800 shadow-md hover:shadow-yellow-600 hover:shadow-lg">
+        <p class="col-start-2 md:col-span-1 bg-amber-400 hover:bg-amber-600 shadow-lg py-2 text-center text-zinc-950 font-medium rounded-lg">
           <a href="{% url "usuarios" %}">
-            Accede aquí al control de usuarios!
+            Control de usuarios
           </a>
         </p>
         {% endif %}
-        <p class="col-span-2 md:col-span-1 bg-yellow-400 py-2 text-center text-zinc-950 font-medium rounded-b-xl shadow-yellow-800 shadow-md hover:shadow-yellow-600 hover:shadow-lg">
+        <p class="col-start-2 md:col-span-1 bg-amber-400 hover:bg-amber-600 shadow-lg py-2 text-center text-zinc-950 font-medium rounded-lg">
           <a href="{% url 'nuevoRegistro' %}">
-            Accede aquí al registro de camiones!
+            Crear un registro
           </a>
         </p>
       </div>          
     </div>
     <!--Filtro de registros-->
     <div class="px-3">
-        <h3 class="text-2xl font-bold mt-8"> Filtrar registros </h3>
-          <p>
-            Si buscas algo más particular, puedes filtrar según el número del tracto que estes buscando.
-          </p>
-          <p>
-            Para volver a ver todos los registros solo debes volver a presionar filtrar sin haber indicado ningún tracto.
-          </p>
-          <form action="." method="POST" class="flex items-center">
-            {% csrf_token %}
-            <label for="tracto" class="mr-2 font-semibold">N° Tracto</label>
-            <div class="mx-2 ">
-              <input type="text" name="tracto" placeholder="Ingrese el número de tracto"maxlength="4" class="rounded-md"
-            >
-            </div>
-            {% comment %} 
-            <div class="ml-4 my-2"> <!-- Agregamos una clase de margen a la izquierda -->
-              <label for="todo">Volver a mostrar todo</label>
-              <input 
-                type="checkbox" 
-                name="todo" 
-                value="1"
-                id="todo"
-              >
-            </div> 
-            {% endcomment %}
-            {% comment %} 
-            <div class="ml-4 my-2"> <!-- Agregamos una clase de margen a la izquierda -->
-              <label for="hora">Hora</label>
-              <input 
-                type="datetime-local" 
-                name="fecha" 
-                value=""
-              >
-            </div> 
-            {% endcomment %}
-          
-            <button class="bg-amber-500 text-white px-4 py-2 rounded-md my-4" type="submit">
-              Filtrar
-            </button>     
-          </form>
+      <form action="." method="POST" class="flex items-center">
+        {% csrf_token %}
+        <label for="tracto" class="mr-2 font-semibold">N° Tracto</label>
+        <div class="mx-2 ">
+          <input type="text" name="tracto" placeholder="Ingrese el número de tracto" maxlength="4" class="rounded-md min-w-42">
+        </div>
+        {% comment %} 
+        <div class="ml-4 my-2"> <!-- Agregamos una clase de margen a la izquierda -->
+          <label for="todo">Volver a mostrar todo</label>
+          <input 
+            type="checkbox" 
+            name="todo" 
+            value="1"
+            id="todo"
+          >
+        </div> 
+        {% endcomment %}
+        {% comment %} 
+        <div class="ml-4 my-2"> <!-- Agregamos una clase de margen a la izquierda -->
+          <label for="hora">Hora</label>
+          <input 
+            type="datetime-local" 
+            name="fecha" 
+            value=""
+          >
+        </div> 
+        {% endcomment %}
+      
+        <button class="bg-amber-400 hover:bg-amber-600 shadow-lg text-white px-4 py-2 rounded-md my-4" type="submit">
+          Filtrar
+        </button>     
+      </form>
           
     </div>
     <!--Tabla de los registros-->
-    <div class="bg-zinc-400 h-3/4 text-center py-4 px-6 overflow-scroll">
+    <div class="text-center py-4 px-6 overflow-scroll">
       <table class="min-w-full divide-y divide-gray-300">
         <thead>
           <tr>

@@ -3,8 +3,8 @@
 
 {% block usuarios %}
 <div class="bg-white h-screen">
-  <div class="my-10">
-    <div class="grid grid-cols-4 mx-6 my-8">
+  <div class="my-8">
+    <div class="grid grid-cols-4 mx-16 my-8">
       <!--División para parte de filtrado-->
       <div class="col-span-3">
         <h2 class="text-4xl font-semibold">Control de usuarios</h2>
@@ -13,7 +13,7 @@
           <div class="">
             <p class="font-medium">Búsqueda por nombre:</p>
             <input type="text" name="tracto" placeholder="Nombre" maxlength="25" class="rounded-md">
-            <button class="bg-amber-500 text-white px-4 py-2 rounded-md" type="submit">
+            <button class="bg-amber-400 hover:bg-amber-600 shadow-lg text-white px-4 py-2 rounded-md" type="submit">
               Filtrar
             </button> 
           </div>            
@@ -21,20 +21,21 @@
       </div>
       <!--División para botón al registro de usuarios-->
       <div class="flex items-center justify-end px-6">
-        <a href="{% url "registrar" %}" class="bg-amber-400 text-white font-semibold rounded-lg px-4 py-2">
+        <a href="{% url "registrar" %}" class="bg-amber-400 hover:bg-amber-600 shadow-lg text-white font-semibold rounded-lg px-4 py-2">
           Registrar usuarios
         </a>
       </div>
     </div>
     <!--División para muestra de resultados-->
-    <div class="grid grid-cols-7">
-      <table class="col-start-2 col-span-5 rounded-lg overflow-hidden">
+    <div class="flex items-center mx-16">
+      <table class="min-w-full overflow-y-auto">
         <thead>
           <tr class="bg-zinc-400">
             <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-bold text-gray-900 sm:pl-3"> Nombre completo </th>
             <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-bold text-gray-900 sm:pl-3"> Correo electrónico </th>
             <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-bold text-gray-900 sm:pl-3"> Teléfono </th>
             <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-bold text-gray-900 sm:pl-3"> Grupo de trabajo </th>
+            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-bold text-gray-900 sm:pl-3"></th>
           </tr>
         </thead>
         <tbody>
@@ -42,23 +43,18 @@
           <!--cycle para el intercalado de clases-->
             <tr class="{% cycle 'bg-zinc-200' 'bg-white' %}">
               <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">{{ e.nombre }}</td>
-              <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">Correo de relleno</td>
+              <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">{{ e.email }}</td>
               <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">Teléfono de relleno</td>
-              <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">Grupo de relleno</td>
+              <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">{{ e.equipo }}</td>
+              <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">
+                <a 
+                  href="{% url 'eliminar' e.id %}" 
+                  class="bg-amber-400 hover:bg-amber-600 shadow-lg text-zinc-600 rounded-md px-3 py-1"> Eliminar </a>
+              </td>
             </tr>
           {% endfor %}
         </tbody>
       </table>
-       {% comment %} <ul class="col-start-2 col-span-5 bg-red-500">
-        {% for e in usuarios %}
-        <li class="flex items-center justify-between p-2">
-          <span class="">{{ e.nombre }}</span>
-          <a href="{% url 'eliminar' e.id %}" class="">
-            Eliminar
-          </a>
-        </li>
-        {% endfor %}
-      </ul> {% endcomment %}
     </div>
   </div>
 </div>
