@@ -2,9 +2,9 @@
 {% load static %}
 
 {% block usuarios %}
-<div class="bg-white">
-  <div class="mt-6">
-    <div class="grid grid-cols-4 mx-6">
+<div class="bg-white h-screen">
+  <div class="my-10">
+    <div class="grid grid-cols-4 mx-6 my-8">
       <!--División para parte de filtrado-->
       <div class="col-span-3">
         <h2 class="text-4xl font-semibold">Control de usuarios</h2>
@@ -27,28 +27,29 @@
       </div>
     </div>
     <!--División para muestra de resultados-->
-    <div class="grid grid-cols-7 mt-6">
-      <table class="col-start-2 col-span-5">
+    <div class="grid grid-cols-7">
+      <table class="col-start-2 col-span-5 rounded-lg overflow-hidden">
         <thead>
-          <tr>
-            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3"> Nombre completo </th>
-            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3"> Correo electrónico </th>
-            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3"> Teléfono </th>
-            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3"> Grupo de trabajo </th>
+          <tr class="bg-zinc-400">
+            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-bold text-gray-900 sm:pl-3"> Nombre completo </th>
+            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-bold text-gray-900 sm:pl-3"> Correo electrónico </th>
+            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-bold text-gray-900 sm:pl-3"> Teléfono </th>
+            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-bold text-gray-900 sm:pl-3"> Grupo de trabajo </th>
           </tr>
         </thead>
         <tbody>
           {% for e in usuarios %}
-          <tr>
-            <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3"> {{ e.nombre}} </td>
-            <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3"> Correo de relleno </td>
-            <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3"> Teléfono de relleno </td>
-            <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3"> Grupo de relleno </td>
-          </tr>
+          <!--cycle para el intercalado de clases-->
+            <tr class="{% cycle 'bg-zinc-200' 'bg-white' %}">
+              <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">{{ e.nombre }}</td>
+              <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">Correo de relleno</td>
+              <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">Teléfono de relleno</td>
+              <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">Grupo de relleno</td>
+            </tr>
           {% endfor %}
         </tbody>
       </table>
-      {% comment %} <ul class="col-start-2 col-span-5 bg-red-500">
+       {% comment %} <ul class="col-start-2 col-span-5 bg-red-500">
         {% for e in usuarios %}
         <li class="flex items-center justify-between p-2">
           <span class="">{{ e.nombre }}</span>

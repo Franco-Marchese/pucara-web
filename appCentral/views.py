@@ -58,6 +58,7 @@ class NuevoRegistroView(View):
         # Junta algunos de los datos necesarios para completar el formulario.
         conductores = Conductor.objects.all()
         camiones = Camion.objects.all()
+        _id = usuario.id
         # Obtiene al autor del formulario por completar en base a la sesión iniciada.
         autor = Usuario.objects.get(id=_id)
         return render(request, 'nuevoRegistro.html', {
