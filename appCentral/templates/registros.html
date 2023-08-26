@@ -11,13 +11,13 @@
       </div>
       <div class="grid gap-2 grid-cols-3 grid-rows-2 my-2">
         {% if usuario.es_admin == "1" %}
-        <p class="col-start-2 md:col-span-1 bg-amber-400 hover:bg-amber-600 shadow-lg py-2 text-center text-zinc-950 font-medium rounded-lg">
+        <p class="col-start-2 md:col-span-1 bg-amber-400 hover:bg-amber-600 shadow-lg py-2 text-center text-white font-medium rounded-lg">
           <a href="{% url "usuarios" %}">
             Control de usuarios
           </a>
         </p>
         {% endif %}
-        <p class="col-start-2 md:col-span-1 bg-amber-400 hover:bg-amber-600 shadow-lg py-2 text-center text-zinc-950 font-medium rounded-lg">
+        <p class="col-start-2 md:col-span-1 bg-amber-400 hover:bg-amber-600 shadow-lg py-2 text-center text-white font-medium rounded-lg">
           <a href="{% url 'nuevoRegistro' %}">
             Crear un registro
           </a>
@@ -28,9 +28,19 @@
     <div class="px-3">
       <form action="." method="POST" class="flex items-center">
         {% csrf_token %}
-        <label for="tracto" class="mr-2 font-semibold">N° Tracto</label>
-        <div class="mx-2 ">
-          <input type="text" name="tracto" placeholder="Ingrese el número de tracto" maxlength="4" class="rounded-md min-w-42">
+        <div class="mx-2 grid">
+          <label for="tracto" class="mr-2 font-semibold">N° Tracto</label>
+          <input 
+            type="text" 
+            name="tracto" 
+            placeholder="Ingrese el número de tracto" 
+            maxlength="4" 
+            class="w-96 rounded-md">
+
+            <button 
+              class="bg-amber-400 hover:bg-amber-600 shadow-lg text-white px-4 py-2 rounded-md my-2" type="submit">
+                Filtrar
+            </button>   
         </div>
         {% comment %} 
         <div class="ml-4 my-2"> <!-- Agregamos una clase de margen a la izquierda -->
@@ -52,11 +62,7 @@
             value=""
           >
         </div> 
-        {% endcomment %}
-      
-        <button class="bg-amber-400 hover:bg-amber-600 shadow-lg text-white px-4 py-2 rounded-md my-4" type="submit">
-          Filtrar
-        </button>     
+        {% endcomment %}  
       </form>
           
     </div>
