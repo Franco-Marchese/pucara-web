@@ -1,35 +1,65 @@
 {% load static %}
 {% load static tailwind_tags %}
 
-<html class="scroll-smooth scroll-pt-12">
+<html class="scroll-smooth scroll-pt-12 h-screen">
   <head>
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="description" content="">
       <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="icon" href="{% static 'img/logo.jpg' %}">
       <title>PUCARA</title>
       {% tailwind_css %}
   </head>
-  <nav class="bg-zinc-950 grid grid-cols-3 p-5">
-    <!--Identificador de usuario activo y barra de navegación-->
-    <div class="flex items-center">
-      <p 
-      class="bg-zinc-400 text-white mx-6 px-8 rounded-lg">
-      {{ usuario.nombre }} 
-      </p>
-    </div>
-    <!--Logo de Pucara-->
-    <div>
-      <a href="{% url 'registros' %}" class="p-1.5">
-        <span class="sr-only">PUCARA</span>
-        <img alt="logo" src="{% static 'img\logo.jpg' %}" class="h-16 w-16 mx-auto rounded-3xl"/>
-      </a>    </div>
-    <!--Para cerrar sesión activa-->
-    <div class="flex justify-end items-center">
-      <a 
-      href="{% url 'egreso' %}" class=" mx-3  bg-white py-3 px-6 text-center text-zinc-950 font-medium rounded-lg shadow-md "> Cerrar sesion </a>
-    </div>
-  </nav>
+  <header class="bg-white">
+    <nav class="bg-zinc-950 grid grid-cols-2 p-2">
+      <!--Logo de Pucara-->
+      <div class="justify-self-start ml-16">
+        <a href="{% url 'registros' %}" class="p-1.5">
+          <span class="sr-only">PUCARA</span>
+          <img alt="logo" src="{% static 'img\logo.jpg' %}" class="h-16 w-16 mx-auto rounded-3xl"/>
+        </a>
+      </div>
+      <div class="flex justify-end">
+        <div class="flex justify-self-start ml-16">
+            <span class="sr-only">Usuario</span>
+            <img 
+              alt="logo" 
+              src="{% static 'img\user.png' %}" 
+              class="h-8 w-8 ml-auto mr-2 my-auto bg-white rounded-full"/>
+          </a>
+        </div>
+        <div class="my-auto">
+          <label 
+            for="areaCheckboxDropDown" 
+            class="text-white text-xl font-semibold mr-6"> 
+              {{ usuario.nombre }} 
+          </label>
+          <input 
+            class="hidden"
+            type="checkbox" 
+            name="cargado" 
+            value="1"
+            id="areaCheckboxDropDown"
+          >
+        </div>
+      </div>  
+    </nav>
+  </header>
+  <div aria-checked="false" id="dropdown" class="hidden aria-checked:bg-zinc-950 aria-checked:bg-gradient-to-b aria-checked:from-transparent aria-checked:to-zinc-700 aria-checked:grid">
+    {% if usuario %}
+      <!--Para cerrar sesión activa-->
+      <div class="flex justify-end items-center pb-5">
+        <a 
+        href="{% url 'registros' %}" class="my-auto pr-6 py-2 text-center text-white font-medium shadow-md hover:bg-gradient-to-r hover:from-transparent hover:to-zinc-500"> Registros</a>
+      </div>
+      <div class="flex justify-end items-center pb-5">
+        <a 
+        href="{% url 'egreso' %}" class="my-auto pr-6 py-2 text-center text-white font-medium shadow-md hover:bg-gradient-to-r hover:from-transparent hover:to-zinc-500"> Cerrar sesion </a>
+      </div>
+    {% endif %}
+  </div>
+  
   <body>
     <div class="#">
         <!-- Menu -->
@@ -52,4 +82,16 @@
       <p class="mt-10 text-center text-xs leading-5 text-gray-400 font-semibold p-3">&copy;Pucara Ltda, Chile</p>
     </div>
   </footer>
+
+  <script>
+    // Get references to the checkbox and the div element
+    const checkboxBase = document.getElementById('areaCheckboxDropDown');
+    const divElementBase = document.getElementById('dropdown');
+  
+    // Add an event listener to the checkbox to handle changes
+    checkboxBase.addEventListener('change', function() {
+      // Update the aria-checked attribute of the div based on the checkbox value
+      divElementBase.setAttribute('aria-checked', this.checked);
+    });
+  </script>
 </html>

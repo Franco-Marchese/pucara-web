@@ -49,7 +49,11 @@
             <tr class="{% cycle 'bg-zinc-200' 'bg-white' %}">
               <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">{{ e.nombre }}</td>
               <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">{{ e.email }}</td>
-              <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">Teléfono de relleno</td>
+              {% if e.telefono %}
+                <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3"> {{ e.telefono }} </td>
+              {% else %}
+                <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">Teléfono no registrado</td>
+              {% endif %}
               <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">{{ e.equipo }}</td>
               <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">
                 <a 

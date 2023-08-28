@@ -47,7 +47,7 @@ class Registros:
 
         if self.tracto:
             try:
-                registros = Registro.objects.filter(tracto__icontains=self.tracto)
+                registros = Registro.objects.filter(tracto=self.tracto)
             except:
                 print("Fallo la búsqueda filtrada.")
                 return redirect("registros")

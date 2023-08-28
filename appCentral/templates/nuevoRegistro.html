@@ -2,26 +2,26 @@
 {% load static %}
 
 {% block nuevoRegistro %}
-<div class="bg-white h-screen ml-16 my-8 grid grid-cols-2">
-  <form action="." method="POST" class="justify-self-center">
+<div class="bg-white h-4/5 ml-16 my-8 grid grid-cols-2">
+  <form action="." method="POST" class="justify-self-center w-full">
     {% csrf_token %}
-    <div>
+    <div class="">
       <h1 class="text-4xl font-semibold">Registra Un Camión</h1>
       <div class="grid py-4 gap-2">
         <div>
-          <label for="areaCheckedCheckbox" class="font-bold"> Este camión se encuentra cargado: </label>
+          <label for="areaCheckboxSello" class="font-bold"> Este camión se encuentra cargado: </label>
           <input 
             class=""
             type="checkbox" 
             name="cargado" 
             value="1"
-            id="areaCheckedCheckbox"
+            id="areaCheckboxSello"
           >
         </div>
 
         <div>
           <input 
-            class="w-full md:w-96 py-2 px-4 rounded-md shadow-lg border-gray-300 placeholder-gray-400 sm:text-sm"
+            class="w-full py-2 px-4 rounded-md shadow-lg border-gray-300 placeholder-gray-400 sm:text-sm"
             type="text" 
             name="tracto" 
             placeholder="Ingrese el número de tracto"
@@ -32,7 +32,7 @@
         
         <div>
           <select 
-            class="w-full md:w-96 py-2 px-4 rounded-md shadow-lg border-gray-300 text-gray-400 sm:text-sm" 
+            class="w-full py-2 px-4 rounded-md shadow-lg border-gray-300 text-gray-400 sm:text-sm" 
             id="idConductor" 
             name="idConductor" 
             required>
@@ -40,28 +40,28 @@
             {% for e in conductores %}
             <option 
               value="{{ e.id }}"
-              class="w-full md:w-96 py-2 px-4 rounded-md shadow-lg border-gray-300 text-gray-400 sm:text-sm"> {{ e.nombre }} </option>
+              class="w-full py-2 px-4 rounded-md shadow-lg border-gray-300 text-gray-400 sm:text-sm"> {{ e.nombre }} </option>
             {% endfor %}
           </select>
         </div>
 
         <div>
           <select 
-            class="w-full md:w-96 py-2 px-4 rounded-md shadow-lg border-gray-300 text-gray-400 sm:text-sm" 
+            class="w-full py-2 px-4 rounded-md shadow-lg border-gray-300 text-gray-400 sm:text-sm" 
             name="idCamion" 
             required>
             <!-- Options for idCamion selection -->
             {% for e in camiones %}
             <option 
               value="{{ e.id }}"
-              class="w-full md:w-96 py-2 px-4 rounded-md shadow-lg border-gray-300 text-gray-400 sm:text-sm"> {{ e.nombre }} </option>
+              class="w-full py-2 px-4 rounded-md shadow-lg border-gray-300 text-gray-400 sm:text-sm"> {{ e.nombre }} </option>
             {% endfor %}
           </select>
         </div>
 
         <div>
           <input 
-            class="w-full md:w-96 py-2 px-4 rounded-md shadow-lg border-gray-300 placeholder-gray-400 sm:text-sm"
+            class="w-full py-2 px-4 rounded-md shadow-lg border-gray-300 placeholder-gray-400 sm:text-sm"
             type="text" 
             name="ppu" 
             required 
@@ -72,7 +72,7 @@
 
         <div class="flex">
           <input 
-            class="w-full md:w-96 py-2 px-4 rounded-md shadow-lg border-gray-300 placeholder-gray-400 sm:text-sm"
+            class="w-full py-2 px-4 rounded-md shadow-lg border-gray-300 placeholder-gray-400 sm:text-sm"
             type="text" 
             name="comienzoContenedor" 
             required 
@@ -91,10 +91,10 @@
           >
         </div>
 
-        <div aria-checked="false" class="hidden aria-checked:gap-2 aria-checked:grid">
+        <div aria-checked="false" id="sello" class="hidden aria-checked:gap-2 aria-checked:grid">
           <div>
             <input 
-              class="w-full md:w-96 py-2 px-4 rounded-md shadow-lg border-gray-300 placeholder-gray-400 sm:text-sm"
+              class="w-full py-2 px-4 rounded-md shadow-lg border-gray-300 placeholder-gray-400 sm:text-sm"
               type="text" 
               name="sello" 
               placeholder="Número de sello"
@@ -104,14 +104,10 @@
           </div>
         </div>
       </div>
-      
-      {% comment %} <div class="text-center block  font-medium text-xl text-gray-700 my-3">
-        <p> Este registro será guardado bajo la responsabilidad de <i> {{ autor.nombre }} </i> </p>
-      </div> {% endcomment %}
 
       <div class="">
         <button 
-          class="w-full md:w-96 py-2 px-4 rounded-md bg-amber-500 text-sm font-semibold shadow-lg text-white hover:bg-amber-600" 
+          class="w-full py-2 px-4 rounded-md bg-amber-500 text-sm font-semibold shadow-lg text-white hover:bg-amber-600" 
           type="submit">
             Enviar
         </button>
@@ -141,26 +137,10 @@
     }
     </script>
 
-  <!--funcion en javascript para que cuando el camion no vaya cargado no se pueda escribir el n° del contenedor y el n° de sello-->
-  <script>
-    const cargado = document.getElementById('cargado');
-    const sello = document.getElementById('sello');
-
-    cargado.addEventListener('change', () => {
-      if (cargado.checked) {
-        // Si el cargado está marcado (cargado es igual a 1), habilitar los campos
-        sello.disabled = false;
-      } else {
-        // Si el cargado no está marcado (cargado es igual a 0), deshabilitar los campos
-        sello.disabled = true;
-      }
-    });
-  </script>
-
   <script>
     // Get references to the checkbox and the div element
-    const checkbox = document.getElementById('areaCheckedCheckbox');
-    const divElement = document.querySelector('div[aria-checked]');
+    const checkbox = document.getElementById('areaCheckboxSello');
+    const divElement = document.getElementById('sello');
   
     // Add an event listener to the checkbox to handle changes
     checkbox.addEventListener('change', function() {

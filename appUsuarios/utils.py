@@ -43,6 +43,7 @@ class Usuarios:
     def crearUsuario(self, **kwargs):
         self.email = kwargs.get("email")
         self.nombre = kwargs.get("nombre")
+        self.telefono = kwargs.get("telefono", "")
         self.equipo = kwargs.get("equipo")
         self.esAdmin = kwargs.get("esAdmin", 0)
         self.password = kwargs.get("contraseña")
@@ -58,6 +59,7 @@ class Usuarios:
             nuevoUsu = Usuario.objects.create(     
                 email=self.email, 
                 contraseña=self.password, 
+                telefono=self.telefono,
                 nombre=self.nombre,
                 equipo=self.equipo,
                 es_admin=self.esAdmin,

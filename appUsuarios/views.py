@@ -52,10 +52,11 @@ class RegistrarView(View):
             email = request.POST.get("email"),
             nombre = request.POST.get("nombre"),
             equipo = request.POST.get("equipos"),
+            telefono = request.POST.get("telefono", ""),
             esAdmin = int(request.POST.get("esAdmin", "0")),
             contraseña = encrypt(request.POST.get("contraseña")),
         )
-        return redirect("registrar")
+        return redirect("usuarios")
 
 class UsuariosView(View):
     def __init__(self, *args, **kwargs):
