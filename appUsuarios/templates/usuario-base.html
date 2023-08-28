@@ -24,11 +24,13 @@
           <img alt="logo" src="{% static 'img\logo.jpg' %}" class="h-16 w-16 mx-auto rounded-3xl"/>
         </a>
       </div>
-      <!--Para cerrar sesión activa-->
-      <div class="flex justify-end items-center">
-        <a 
-        href="{% url 'egreso' %}" class=" mx-3  bg-white py-3 px-6 text-center text-zinc-950 font-medium rounded-lg shadow-md "> Cerrar sesion </a>
-      </div>
+      {% if usuario %}
+        <!--Para cerrar sesión activa-->
+        <div class="flex justify-end items-center">
+          <a 
+          href="{% url 'egreso' %}" class=" mx-3  bg-white py-3 px-6 text-center text-zinc-950 font-medium rounded-lg shadow-md "> Cerrar sesion </a>
+        </div>
+      {% endif %}
     </nav>
   </header>
 
