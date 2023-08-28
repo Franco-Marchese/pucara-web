@@ -64,14 +64,24 @@ class UsuariosView(View):
 
     @method_decorator(token_requerido)
     def get(self, request):
+        nombre = request.session.get("nombre", None)
         # Puede devolver una lista de usuarios completa o filtrada.
-        usuarios = self.u.todoUsuario()
+        usuarios = self.u.todoUsuario(nombre=nombre)
         usuario = self.u.infoPersonal(request)
 
         return render(request, 'usuarios.html', {
             "usuario":usuario,
             "usuarios":usuarios,
         })
+    
+    @method_decorator(token_requerido)
+    def post(self, request):
+        nombre = request.POST.get("nombre", "")
+        if nombre != "":
+            request.session["nombre"] = nombre
+            return redirect("usuarios")
+        request.session["nombre"] = None
+        return redirect("usuarios")
 
 class EliminarView(View):
     def __init__(self, *args, **kwargs):

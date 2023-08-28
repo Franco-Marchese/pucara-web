@@ -71,13 +71,13 @@ class Usuarios:
 
         if self.nombre:
             try:
-                usuarios = Usuario.objects.filter(nombre=self.nombre)
+                usuarios = Usuario.objects.filter(nombre__icontains=self.nombre).values()
             except:
                 print("Fallo la búsqueda filtrada.")
                 return redirect("usuarios")
         else:
             try:
-                usuarios = Usuario.objects.all()
+                usuarios = Usuario.objects.all().order_by('-id')[:30]
             except:
                 print("Falló la busqueda de todos.")
                 return redirect("usuarios")
@@ -119,30 +119,6 @@ class Usuarios:
         response = redirect("ingreso")
         response.delete_cookie("token")
         return response
-
-def verify(email):
-    correo = email
-    find = Usuario.objects.filter(email=correo).exists()
-    return find
-
-# def filtrar_resultados(**kwargs):
-#     print("FUNCION ACTIVATA")
-#     qset = kwargs.get("qset", None)
-#     if qset is not None:
-#         data = list(qset.values())
-#         df = pd.DataFrame(data)
-#         print(df)
-#         filtros = {
-#             "tracto":int(kwargs.get("tracto", None)),
-#             "fecha":kwargs.get("fecha", None),
-#             "hora":kwargs.get("hora", None),
-#         }
-#         # df[["tracto", "fecha", "hora"]] = df[["tracto", "fecha", "hora"]].apply(str)
-#         condiciones = [df[col] == value for col, value in filtros.items()]
-#         print("CONDICION: {}".format(condiciones))
-#         return "LLAMADO CORRECTAMENTE"
-#     else:
-#         return "FALLO EL QSET"
 
 def token_requerido(metodo_vista):
     def vista_envuelta(request, *args, **kwargs):

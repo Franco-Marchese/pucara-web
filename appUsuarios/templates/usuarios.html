@@ -12,7 +12,12 @@
           {% csrf_token %}
           <div class="">
             <p class="font-medium">Búsqueda por nombre:</p>
-            <input type="text" name="tracto" placeholder="Nombre" maxlength="25" class="rounded-md">
+            <input 
+              type="text" 
+              name="nombre" 
+              placeholder="Nombre" 
+              maxlength="25" 
+              class="w-96 rounded-md">
             <button class="bg-amber-400 hover:bg-amber-600 shadow-lg text-white px-4 py-2 rounded-md" type="submit">
               Filtrar
             </button> 

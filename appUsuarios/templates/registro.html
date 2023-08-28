@@ -2,31 +2,46 @@
 {% load static %}
 
 {% block registros_usuarios %}
-<div class="bg-white h-screen mx-16 my-8">
-    <h1 class="text-4xl font-semibold">Ingrese los datos para el registro</h1>
+<div class="bg-white h-screen ml-16 my-8 grid grid-cols-2">
     <form action="." method="POST">
         {% csrf_token %}
-        <div class="mx-8"> 
-            <div>
-                <div class="mt-4">
+        <div class=""> 
+            <h1 class="text-4xl font-semibold">Ingrese los datos para el registro</h1>
+            <div class="grid gap-2 mt-3">
+                <div class="">
                     <input required name="nombre" type="text" placeholder="Nombre" class="w-full md:w-96 py-2 px-4 rounded-md shadow-lg border-gray-300 placeholder-gray-400 sm:text-sm">
                 </div>
-                <div class="mt-4">
+                <div class="">
                     <input required name="email" type="email" autocomplete="email" placeholder="Correo electrónico" class="w-full shadow-lg md:w-96 py-2 px-4 rounded-md border-gray-300 placeholder-gray-400 sm:text-sm">
                 </div>
-                <div class="mt-4">
+                <div class="">
                     <input name="telefono" type="email" placeholder="Teléfono de contacto" class="w-full md:w-96 py-2 px-4 rounded-md shadow-lg border-gray-300 placeholder-gray-400 sm:text-sm">
                 </div>
             </div>
             <div class="mt-4">
                 <label for="equipos" class="block text-sm font-medium text-gray-700">Elija el equipo al que se integra:</label>
-                <select id="equipos" name="equipos" class="mt-1 block w-full md:w-96 py-2 px-3 border-gray-300 bg-white rounded-md shadow-lg sm:text-sm">
-                    <option value="accesos">Control de accesos</option>
-                    <option value="gps">Control GPS</option>
+                <select 
+                    id="equipos" 
+                    name="equipos" 
+                    class="w-full md:w-96 py-2 px-4 rounded-md shadow-lg border-gray-300 text-gray-400 sm:text-sm">
+                    <option 
+                        value="accesos"
+                        class="w-full md:w-96 py-2 px-4 rounded-md shadow-lg border-gray-300 text-gray-400 sm:text-sm">
+                            Control de accesos
+                        </option>
+                    <option 
+                        value="gps"
+                        class="w-full md:w-96 py-2 px-4 rounded-md shadow-lg border-gray-300 text-gray-400 sm:text-sm">
+                            Control GPS
+                        </option>
                 </select>
             </div>
-            <div class="mt-4">
-                <label for="esAdmin" class="block text-sm font-medium text-gray-700">Este usuario será administrador?</label>
+            <div class="mt-4 flex gap-2">
+                <label 
+                    for="esAdmin" 
+                    class="block text-sm font-medium text-gray-700"> 
+                    Este usuario será administrador?
+                </label>
                 <input type="checkbox" id="esAdmin" name="esAdmin" value="1" class="mt-1">
             </div>
             <div class="mt-4">
@@ -39,6 +54,10 @@
             </div>
         </div>
     </form>
+    <div class="w-3/4 relative justify-self-end">
+        <img src="{% static 'img\seguridad.jpg' %}" alt="Side Screen Image" class="w-full h-3/5 object-cover">
+        <div class="absolute inset-0 bg-gradient-to-l from-transparent to-white"></div>
+      </div>
 </div>
 
 {% endblock %}

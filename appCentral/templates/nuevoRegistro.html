@@ -2,14 +2,14 @@
 {% load static %}
 
 {% block nuevoRegistro %}
-<div class="bg-white h-screen mx-16 my-8">
-  <h1 class="text-4xl font-semibold">Registra Un Camión</h1>
-  <form action="." method="POST">
+<div class="bg-white h-screen ml-16 my-8 grid grid-cols-2">
+  <form action="." method="POST" class="justify-self-center">
     {% csrf_token %}
-    <div class="">
+    <div>
+      <h1 class="text-4xl font-semibold">Registra Un Camión</h1>
       <div class="grid py-4 gap-2">
         <div>
-          <label for="areaCheckedCheckbox" class="font-bold"> Este camión se encuentra cargado </label>
+          <label for="areaCheckedCheckbox" class="font-bold"> Este camión se encuentra cargado: </label>
           <input 
             class=""
             type="checkbox" 
@@ -70,37 +70,36 @@
           >
         </div>
 
+        <div class="flex">
+          <input 
+            class="w-full md:w-96 py-2 px-4 rounded-md shadow-lg border-gray-300 placeholder-gray-400 sm:text-sm"
+            type="text" 
+            name="comienzoContenedor" 
+            required 
+            maxlength="10"
+            placeholder="Número de contenedor"
+            id="comienzoContenedor"
+          >
+          <input 
+            class="w-full md:w-12 py-2 px-4 rounded-md shadow-lg border-gray-300 placeholder-gray-400 sm:text-sm"
+            type="text" 
+            name="finalContenedor" 
+            required 
+            maxlength="1"
+            placeholder=""
+            id="finalContenedor"
+          >
+        </div>
+
         <div aria-checked="false" class="hidden aria-checked:gap-2 aria-checked:grid">
           <div>
             <input 
               class="w-full md:w-96 py-2 px-4 rounded-md shadow-lg border-gray-300 placeholder-gray-400 sm:text-sm"
               type="text" 
               name="sello" 
-              required
               placeholder="Número de sello"
               maxlength="8"
               id="sello"
-            >
-          </div>
-
-          <div class="">
-            <input 
-              class="w-full md:w-96 py-2 px-4 rounded-md shadow-lg border-gray-300 placeholder-gray-400 sm:text-sm"
-              type="text" 
-              name="comienzoContenedor" 
-              required 
-              maxlength="10"
-              placeholder="5555555555"
-              id="comienzoContenedor"
-            >
-            <input 
-              class="w-full md:w-12 py-2 px-4 rounded-md shadow-lg border-gray-300 placeholder-gray-400 sm:text-sm"
-              type="text" 
-              name="finalContenedor" 
-              required 
-              maxlength="1"
-              placeholder="5"
-              id="finalContenedor"
             >
           </div>
         </div>
@@ -119,6 +118,10 @@
       </div>        
     </div>
   </form>
+  <div class="w-3/4 relative justify-self-end">
+    <img src="{% static 'img\camion.jpeg' %}" alt="Side Screen Image" class="w-full h-3/5 object-cover">
+    <div class="absolute inset-0 bg-gradient-to-l from-transparent to-white"></div>
+  </div>
 </div>
         
   <!--Funcion en javascript para que la hora se ponga automaticamente-->
