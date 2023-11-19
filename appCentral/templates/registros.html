@@ -4,11 +4,11 @@
 {% block menu %}
 <div class="mx-5 py-6 h-screen">
   <div class="">
-    <!--Introducción-->
-    <div class="grid grid-cols-2 px-3">
+    <!-- Introducción -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 px-3">
       <div class="py-2">
         <h3 class="text-4xl font-semibold"> Registros </h3>
-        <!--Filtro de registros-->
+        <!-- Filtro de registros -->
         <div class="mt-2">
           <form action="." method="POST" class="flex items-center">
             {% csrf_token %}
@@ -19,25 +19,25 @@
                 name="tracto" 
                 placeholder="Ingrese el número de tracto" 
                 maxlength="4" 
-                class="w-96 rounded-md">
+                class="w-full sm:w-96 rounded-md">
 
-                <button 
-                  class="bg-amber-400 hover:bg-amber-600 shadow-lg text-white px-4 py-2 rounded-md my-2" type="submit">
-                    Filtrar
-                </button>   
+              <button 
+                class="bg-amber-400 hover:bg-amber-600 shadow-lg text-white px-4 py-2 rounded-md my-2" type="submit">
+                Filtrar
+              </button>   
             </div> 
           </form>   
         </div>
       </div>
-      <div class="grid gap-3 grid-rows-2 my-2 w-80 h-1/2 justify-self-end">
+      <div class="grid gap-3 grid-rows-2 my-2 sm:w-80 sm:h-1/2 justify-self-end">
         {% if usuario.es_admin == "1" %}
-        <p class="col-start-2 row-start-2 h-12 md:col-span-1 bg-amber-400 hover:bg-amber-600 shadow-lg py-2 text-center text-white font-medium rounded-lg">
+        <p class="col-start-2 row-start-2 h-12 sm:col-span-1 bg-amber-400 hover:bg-amber-600 shadow-lg py-2 text-center text-white font-medium rounded-lg">
           <a href="{% url "usuarios" %}">
             Control de usuarios
           </a>
         </p>
         {% endif %}
-        <p class="col-start-2 h-12 md:col-span-1 bg-amber-400 hover:bg-amber-600 shadow-lg py-2 text-center text-white font-medium rounded-lg">
+        <p class="col-start-2 h-12 sm:col-span-1 bg-amber-400 hover:bg-amber-600 shadow-lg py-2 text-center text-white font-medium rounded-lg">
           <a href="{% url 'nuevoRegistro' %}">
             Crear un registro
           </a>
@@ -45,12 +45,11 @@
       </div>          
     </div>
     
-    
-    <!--Tabla de los registros-->
-    <div class="text-center pt-4 px-6 h-3/5 overflow-auto">
-      <table class="min-w-full">
+    <!-- Tabla de los registros -->
+    <div class="text-center pt-4 px-6 h-3/5 overflow-auto py-4">
+      <table class="min-w-full table-fixed rounded-t-lg overflow-hidden  top-0 bg-zinc-400">
         <thead>
-          <tr class="bg-zinc-400">
+          <tr>
             <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">N° Tracto</th>
             <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">Estado</th>
             <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">Equipo</th>
@@ -62,7 +61,7 @@
             <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">N° sello</th>
           </tr>
         </thead>
-        <tbody class="">
+        <tbody>
           {% for registro in registros %}
           <tr class="{% cycle 'bg-zinc-200' 'bg-white' %}">
             <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">{{ registro.tracto }}</td>
@@ -81,9 +80,7 @@
           {% endfor %}
         </tbody>
       </table>
-    </div>
+    </div>      
   </div>
 </div>    
-
 {% endblock %}
-

@@ -2,10 +2,10 @@
 {% load static %}
 
 {% block nuevoRegistro %}
-<div class="bg-white h-4/5 ml-16 my-8 grid grid-cols-2">
-  <form action="." method="POST" class="justify-self-center w-full">
+<div class="bg-white mx-4 my-8 md:ml-16 grid md:grid-cols-2">
+  <form action="." method="POST" class="w-full">
     {% csrf_token %}
-    <div class="">
+    <div class="p-4">
       <h1 class="text-4xl font-semibold">Registra Un Camión</h1>
       <div class="grid py-4 gap-2">
         <div>
@@ -114,41 +114,38 @@
       </div>        
     </div>
   </form>
-  <div class="w-3/4 relative justify-self-end">
+  <div class="hidden md:block w-3/4 relative justify-self-end">
     <img src="{% static 'img\camion.jpeg' %}" alt="Side Screen Image" class="w-full h-3/5 object-cover">
     <div class="absolute inset-0 bg-gradient-to-l from-transparent to-white"></div>
   </div>
 </div>
         
-  <!--Funcion en javascript para que la hora se ponga automaticamente-->
-  <script>
-    function setDateTime() {
-      const dateInput = document.querySelector('input[name="fecha"]');
-      const now = new Date();
-      const year = now.getFullYear();
-      const month = String(now.getMonth() + 1).padStart(2, '0');
-      const day = String(now.getDate()).padStart(2, '0');
-      const hours = String(now.getHours()).padStart(2, '0');
-      const minutes = String(now.getMinutes()).padStart(2, '0');
-    
-      // El valor del campo datetime-local debe tener el formato "AAAA-MM-DDThh:mm"
-      const dateTimeValue = `${year}-${month}-${day}T${hours}:${minutes}`;
-      dateInput.value = dateTimeValue;
-    }
-    </script>
-
-  <script>
-    // Get references to the checkbox and the div element
-    const checkbox = document.getElementById('areaCheckboxSello');
-    const divElement = document.getElementById('sello');
+<!--Funcion en javascript para que la hora se ponga automaticamente-->
+<script>
+  function setDateTime() {
+    const dateInput = document.querySelector('input[name="fecha"]');
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
   
-    // Add an event listener to the checkbox to handle changes
-    checkbox.addEventListener('change', function() {
-      // Update the aria-checked attribute of the div based on the checkbox value
-      divElement.setAttribute('aria-checked', this.checked);
-    });
-  </script>
-</div>
+    // El valor del campo datetime-local debe tener el formato "AAAA-MM-DDThh:mm"
+    const dateTimeValue = `${year}-${month}-${day}T${hours}:${minutes}`;
+    dateInput.value = dateTimeValue;
+  }
+</script>
 
+<script>
+  // Get references to the checkbox and the div element
+  const checkbox = document.getElementById('areaCheckboxSello');
+  const divElement = document.getElementById('sello');
+  
+  // Add an event listener to the checkbox to handle changes
+  checkbox.addEventListener('change', function() {
+    // Update the aria-checked attribute of the div based on the checkbox value
+    divElement.setAttribute('aria-checked', this.checked);
+  });
+</script>
 {% endblock %}
-  
