@@ -1,6 +1,9 @@
 from django.shortcuts import redirect
 from .models import Usuario
 from pucaraweb.settings import SECRET_KEY
+from django.core.validators import EmailValidator
+from django.core.exceptions import ValidationError
+import re
 from functools import reduce
 import pandas as pd
 import hashlib
@@ -128,3 +131,68 @@ def token_requerido(metodo_vista):
             return redirect("ingreso")  # Redirect to the login page or a custom URL
         return metodo_vista(request, *args, **kwargs)
     return vista_envuelta
+
+class ModUsuario:
+
+    def cambiaremail(self, **kwargs):
+        self._id = kwargs.get("_id", "None")
+        self.email = kwargs.get("email", "None")
+        emailvalido= validaremail(self.email)
+        if emailvalido:
+            usuario = Usuario.objects.get(id=self._id)
+            usuario.email = self.email
+            usuario.save(update_fields=['email'])
+            return redirect("mod-usuario")
+        else:
+            return redirect("mod-usuario")
+        
+    def cambiartelefono(self, **kwargs):
+        self._id = kwargs.get("_id", "None")
+        self.telefono = kwargs.get("telefono", "None")
+        telefonovalido= validar_numero(self.telefono)
+        if telefonovalido:
+            usuario = Usuario.objects.get(id=self._id)
+            usuario.telefono = self.telefono
+            usuario.save(update_fields=['telefono'])
+            return redirect("mod-usuario")
+        else:
+            return redirect("mod-usuario")
+        
+    def cambiarContraseña(self, **kwargs):
+        self._id = kwargs.get("_id", "None")
+        self.contraseñaActual = kwargs.get("contraseñaActual", "None")
+        self.contraseñaNueva = kwargs.get("contraseñaNueva", "None")
+        self.repiteContraseñaNueva = kwargs.get("repiteContraseñaNueva", "None")
+
+        try:
+            usuario = Usuario.objects.get(id=self._id)
+        except:
+            print("No se encontró el usuario")
+            return redirect("mod-usuario")
+
+        if encrypt(self.contraseñaActual) == usuario.contraseña:
+            if self.contraseñaNueva == self.repiteContraseñaNueva:
+                usuario.contraseña = encrypt(self.contraseñaNueva)
+                usuario.save(update_fields=['contraseña'])
+                return redirect('ingreso')
+            else:
+                return redirect("mod-usuario-pass")
+        else:
+            return redirect("mod-usuario-pass")
+        
+
+def validaremail(email):
+    validar = EmailValidator()
+    try:
+        validar(email)
+        return True
+    except ValidationError:
+        return False
+def validar_numero(telefono):
+    patron = r'^\d{9}$'
+    if re.match(patron, telefono):
+        return True
+    else:
+        return False
+
+

@@ -1,0 +1,73 @@
+{% extends 'usuario-base.html' %}
+{% load static %}
+
+{% block mod-pass %}
+
+<div>
+    <form action="{% url 'mod-usuario-pass'%}" method='POST' class='flex items-center grid'>
+        {% csrf_token %}
+        <div class="w-full mt-7 flex-col px-8">
+            <div class="mx-5">
+                <div class="py-2">
+                    <h1 class="text-2xl font-bold mt-4 text-left"> Cambiar contraseña </h1>
+                </div>
+                <div>
+                    <div class="">
+                    <label> Ingrese contraseña actual </label>
+                    
+                    </div>
+                    <div class="my-2">
+                        <input 
+                        type="password"
+                        name="contraseñaActual" 
+                        class="px-4 py-2 bg-white mr-4 font-semibold w-full rounded-lg ring-1 ring-inset ring-orange-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-orange-600" 
+                        
+                        >
+                    </div>
+                    <div class="">
+                        <label> Ingrese nueva contraseña </label>
+                        
+                    </div>
+                    <div class="my-2">
+                        <input 
+                        type="password"
+                        name="nuevaContraseña" 
+                        class="px-4 py-2 bg-white mr-4 font-semibold rounded-lg w-full ring-1 ring-inset ring-orange-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-orange-600" 
+                        
+                        >
+                    </div>
+                    <div class="">
+                        <label> Vuelva a ingresar la nueva contraseña </label>
+                        
+                    </div>
+                    <div class="my-2">
+                        <input 
+                        type="password"
+                        name="repiteNuevaContraseña" 
+                        class="px-4 py-2 bg-white mr-4 rounded-lg font-semibold w-full ring-1 ring-inset ring-orange-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-orange-600" 
+                        
+                        >
+                    </div>
+
+                    <input 
+                    type="password"
+                    name="_id" 
+                    value="{{ user.id }}"
+                    class="hidden" 
+                    
+                    >
+                    <div class="flex space-x-4">
+                        <div class="py-2">
+                            <a href="{% url 'mod-usuario' %}" class="w-28 py-2 px-4 rounded-md bg-amber-500 text-sm font-semibold shadow-lg text-white hover:bg-amber-600'">Volver</a>
+                        </div>
+                        <div class="">
+                            <button type="submit" class='w-28 py-2 px-4 rounded-md bg-amber-500 text-sm font-semibold shadow-lg text-white hover:bg-amber-600'>Confirmar</button>
+                        </div>
+                    </div>
+                </div> 
+                
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

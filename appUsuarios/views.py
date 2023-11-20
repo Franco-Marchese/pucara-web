@@ -1,4 +1,4 @@
-from .utils import encrypt, token_requerido, Usuarios
+from .utils import encrypt, token_requerido, Usuarios, ModUsuario
 from django.utils.decorators import method_decorator
 from django.shortcuts import redirect, render
 from django.views import View
@@ -97,4 +97,75 @@ class EliminarView(View):
         else:
             self.u.eliminarUsuario(_id=id)
         return redirect('usuarios')
+    
+        
+class ModificarUsuario(View):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.u = Usuarios()
+        self.modu = ModUsuario() 
+
+    @method_decorator(token_requerido)
+    def get(self, request):
+        usuario = self.u.infoPersonal(request)
+
+        return render(request, 'usuario-mod.html', {
+            "usuario": usuario,
+            "nombre": usuario.nombre,
+            "email": usuario.email,
+            "telefono": usuario.telefono,
+            "equipo": usuario.equipo
+        })
+    @method_decorator(token_requerido)
+    def post(self, request):
+        usuario = self.u.infoPersonal(request)
+
+        if request.POST["email"] != "":
+            # Usar la instancia de ModUsuario
+            cambiandoemail = self.modu.cambiaremail(
+                _id=usuario.id,
+                email=request.POST["email"],
+            )
+            return cambiandoemail
+        if request.POST["telefono"] != "":
+            # Usar la instancia de ModUsuario
+            cambiandotelefono = self.modu.cambiartelefono(
+                _id=usuario.id,
+                telefono=request.POST["telefono"],
+            )
+            return cambiandotelefono
+        return redirect('mod-usuario') 
+
+class ModPass(View):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.u = Usuarios()
+        self.modu = ModUsuario() 
+
+    @method_decorator(token_requerido)
+    def get(self, request):
+        # Lógica para obtener información o realizar acciones necesarias
+        user = self.u.infoPersonal(request)
+
+        return render(request, 'usuario-mod-pass.html', {
+            "user": user,
+            "nombre": user.nombre,
+        })
+    
+    @method_decorator(token_requerido)
+    def post(self,request):
+        cambiando = self.modu.cambiarContraseña(
+            _id = request.POST["_id"],
+            contraseñaActual = request.POST["contraseñaActual"],
+            contraseñaNueva = request.POST["nuevaContraseña"],
+            repiteContraseñaNueva = request.POST["repiteNuevaContraseña"],
+        )
+        return cambiando
+        
+        
+
+        
+
+
+
         
