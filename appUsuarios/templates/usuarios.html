@@ -2,33 +2,69 @@
 {% load static %}
 
 {% block usuarios %}
-<div class="bg-white px-8 sm:px-6 lg:px-44">
-  <div class="bg-zinc-400 flex my-14 items-center justify-center px-4 py-8 sm:px-6 lg:px-8 border border-gray-300 rounded-md relative"> 
-    <div class="my-4">
-      <a href="{% url "registrar" %}" class="absolute top-4 right-4 bg-yellow-400 py-3 px-6 text-center text-zinc-950 font-medium rounded-lg shadow-yellow-800 shadow-md hover:shadow-yellow-600 hover:shadow-lg">
-        Accede aquí al registro de usuarios!
-      </a>
+<div class="bg-white h-screen">
+  <div class="my-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mx-6 sm:mx-8 lg:mx-16 my-8">
+      <!-- División para parte de filtrado -->
+      <div>
+        <h2 class="text-4xl font-semibold">Control de usuarios</h2>
+        <form action="." method="POST" class="flex mt-4">
+          {% csrf_token %}
+          <div class="flex items-center">
+            <p class="font-medium">Búsqueda por nombre:</p>
+            <input 
+              type="text" 
+              name="nombre" 
+              placeholder="Nombre" 
+              maxlength="25" 
+              class="w-full sm:w-96 rounded-md ml-2">
+            <button class="bg-amber-400 hover:bg-amber-600 shadow-lg text-white px-4 py-2 rounded-md ml-2" type="submit">
+              Filtrar
+            </button> 
+          </div>            
+        </form>
+      </div>
+      <!-- División para botón al registro de usuarios -->
+      <div class="flex items-center justify-end sm:col-span-2 lg:col-span-1 px-6 sm:px-0">
+        <a href="{% url "registrar" %}" class="bg-amber-400 hover:bg-amber-600 shadow-lg text-white font-semibold rounded-lg px-4 py-2">
+          Registrar usuarios
+        </a>
+      </div>
     </div>
-
-    <div class="w-full max-w-sm space-y-10 py-8 my-4">
-      <h2 class="mt-8 text-center text-2xl font-bold leading-9 text-gray-900">Control de usuarios</h2>
-      <ul>
-        {% for e in usuarios %}
-        <li class="flex items-center justify-between p-2">
-          <span class="font-semibold">{{ e.nombre }}</span>
-          <a href="{% url 'eliminar' e.id %}" class="bg-amber-500 text-white px-3 py-1.5 rounded-md ml-auto">
-            Eliminar
-          </a>
-        </li>
-        {% endfor %}
-      </ul>
+    <!-- División para muestra de resultados -->
+    <div class="mx-6 sm:mx-8 lg:mx-16">
+      <table class="min-w-full overflow-y-auto">
+        <thead>
+          <tr class="bg-zinc-400">
+            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-bold text-gray-900 sm:pl-3"> Nombre completo </th>
+            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-bold text-gray-900 sm:pl-3"> Correo electrónico </th>
+            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-bold text-gray-900 sm:pl-3"> Teléfono </th>
+            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-bold text-gray-900 sm:pl-3"> Grupo de trabajo </th>
+            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-bold text-gray-900 sm:pl-3"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for e in usuarios %}
+            <!-- cycle para el intercalado de clases -->
+            <tr class="{% cycle 'bg-zinc-200' 'bg-white' %}">
+              <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">{{ e.nombre }}</td>
+              <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">{{ e.email }}</td>
+              {% if e.telefono %}
+                <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3"> {{ e.telefono }} </td>
+              {% else %}
+                <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">Teléfono no registrado</td>
+              {% endif %}
+              <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">{{ e.equipo }}</td>
+              <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">
+                <a 
+                  href="{% url 'eliminar' e.id %}" 
+                  class="bg-amber-400 hover:bg-amber-600 shadow-lg text-zinc-600 rounded-md px-3 py-1"> Eliminar </a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
-
-
-
-
 {% endblock %}
-
-

@@ -2,187 +2,150 @@
 {% load static %}
 
 {% block nuevoRegistro %}
-<div class="bg-white">
-  <form action="." method="POST">
+<div class="bg-white mx-4 my-8 md:ml-16 grid md:grid-cols-2">
+  <form action="." method="POST" class="w-full">
     {% csrf_token %}
-    <div class="bg-zinc-400 my-6 mx-6 py-8 px-6 rounded-lg">
-      <div class="text-center text-xl font-bold leading-8 text-gray-900 my-3">
-        <h1>Registra Un Camión</h1>
-      </div>
-      <div class="border rounded-lg p-6 text-center ">
-        <div class="grid grid-cols-2 py-4 text-center">
-          <div class="">
-            <div class="py-2 text-center block  font-medium text-xl text-gray-700">
-              <label for="tracto">N° Tracto: </label>
-            </div>
-            <div>
-              <input 
-                class="rounded-md px-4 py-2 w-20 border-2 focus:outline-none focus:border-amber-500"
-                type="text" 
-                name="tracto" 
-                placeholder="Ingrese el número de tracto"
-                maxlength="4"
-                required
-              >
-            </div>
-          </div>
-          
-          <div class="py-4 col-start-2">
-            <div class="py-1 text-center block  font-medium text-xl text-gray-700">
-              <label for="cargado">Lleno</label>
-            </div>
-            <div>
-              <input 
-              class=""
-              type="checkbox" 
-              name="cargado" 
-              value="1"
-              id="cargado"
-            >
-            </div>
-          </div>
-          
-          <div class="py-4">
-            <div class="py-2 text-center block  font-medium text-xl text-gray-700">
-              <label for="idConductor">Nombre Conductor</label>
-            </div>
-            <div>
-              <select class="rounded-md py-2 w-64 border-2 focus:outline-none focus:border-amber-500" id="idConductor" name="idConductor" required>
-                <!-- Options for idConductor selection -->
-                {% for e in conductores %}
-                <option value="{{ e.id }}"> {{ e.nombre }} </option>
-                {% endfor %}
-              </select>
-            </div>
-          </div>
-  
-          <div class="col-start-2 ">
-            <div class="py-2 text-center block  font-medium text-xl text-gray-700">
-              <label for="comienzoContenedor">N° Contenedor</label>
-            </div>
-            <div class="flex justify-center rounded-md border-2 focus-within:border-amber-500 ">
-              <div class="">
-                <input 
-                  class="rounded-md w-full text-center focus:outline-none"
-                  type="text" 
-                  name="comienzoContenedor" 
-                  required 
-                  maxlength="10"
-                  id="comienzoContenedor"
-                >
-              </div>
-              <label for="finalContenedor" class="px-2">-</label>
-              <div>
-                <input 
-                  class="rounded-md px-2  w-8 text-center "
-                  type="text" 
-                  name="finalContenedor" 
-                  required 
-                  maxlength="1"
-                  id="finalContenedor"
-                >
-              </div>
-            </div>
-          </div>
-  
-          <div class=" py-4 ">
-            <div class="my-2 text-center block  font-medium text-xl text-gray-700 ">
-              <label for="idCamion">Tipo de camión</label>
-            </div>
-            <div>
-              <select class="rounded-md  py-2 border-2 " name="idCamion" required>
-                <!-- Options for idCamion selection -->
-                {% for e in camiones %}
-                <option value="{{ e.id }}"> {{ e.nombre }} </option>
-                {% endfor %}
-              </select>
-            </div>
-          </div>
-          
-          
-  
-          <div class="">
-            <div class="py-2 text-center block  font-medium text-xl text-gray-700">
-              <label for="sello">N° Sello</label>
-            </div>
-            <div>
-              <input 
-                class="rounded-md px-4 w-12 border-2 focus:outline-none focus:border-amber-500"
-                type="text" 
-                name="sello" 
-                required
-                maxlength="8"
-                id="sello"
-              >
-            </div>
-          </div>
-          
-          
-          <div class="">
-            <div class="text-center block  font-medium text-xl text-gray-700">
-              <label for="ppu">PPU Semi Remorque</label>
-            </div>
-            <div>
-              <input 
-                class="rounded-md px-4 w-20 border-2 focus:outline-none focus:border-amber-500"
-                type="text" 
-                name="ppu" 
-                required 
-                maxlength="6"
-              >
-            </div>
-          </div>
+    <div class="p-4">
+      <h1 class="text-4xl font-semibold">Registra Un Camión</h1>
+      <div class="grid py-4 gap-2">
+        <div>
+          <label for="areaCheckboxSello" class="font-bold"> Este camión se encuentra cargado: </label>
+          <input 
+            class=""
+            type="checkbox" 
+            name="cargado" 
+            value="1"
+            id="areaCheckboxSello"
+          >
         </div>
 
-      </div>
-      
-      <div class="text-center block  font-medium text-xl text-gray-700 my-3">
-        <p> Este registro será guardado bajo la responsabilidad de <i> {{ autor.nombre }} </i> </p>
+        <div>
+          <input 
+            class="w-full py-2 px-4 rounded-md shadow-lg border-gray-300 placeholder-gray-400 sm:text-sm"
+            type="text" 
+            name="tracto" 
+            placeholder="Ingrese el número de tracto"
+            maxlength="4"
+            required
+          >
+        </div>
+        
+        <div>
+          <select 
+            class="w-full py-2 px-4 rounded-md shadow-lg border-gray-300 text-gray-400 sm:text-sm" 
+            id="idConductor" 
+            name="idConductor" 
+            required>
+            <!-- Options for idConductor selection -->
+            {% for e in conductores %}
+            <option 
+              value="{{ e.id }}"
+              class="w-full py-2 px-4 rounded-md shadow-lg border-gray-300 text-gray-400 sm:text-sm"> {{ e.nombre }} </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div>
+          <select 
+            class="w-full py-2 px-4 rounded-md shadow-lg border-gray-300 text-gray-400 sm:text-sm" 
+            name="idCamion" 
+            required>
+            <!-- Options for idCamion selection -->
+            {% for e in camiones %}
+            <option 
+              value="{{ e.id }}"
+              class="w-full py-2 px-4 rounded-md shadow-lg border-gray-300 text-gray-400 sm:text-sm"> {{ e.nombre }} </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div>
+          <input 
+            class="w-full py-2 px-4 rounded-md shadow-lg border-gray-300 placeholder-gray-400 sm:text-sm"
+            type="text" 
+            name="ppu" 
+            required 
+            placeholder="Número de PPU"
+            maxlength="6"
+          >
+        </div>
+
+        <div class="flex">
+          <input 
+            class="w-full py-2 px-4 rounded-md shadow-lg border-gray-300 placeholder-gray-400 sm:text-sm"
+            type="text" 
+            name="comienzoContenedor" 
+            required 
+            maxlength="10"
+            placeholder="Número de contenedor"
+            id="comienzoContenedor"
+          >
+          <input 
+            class="w-full md:w-12 py-2 px-4 rounded-md shadow-lg border-gray-300 placeholder-gray-400 sm:text-sm"
+            type="text" 
+            name="finalContenedor" 
+            required 
+            maxlength="1"
+            placeholder=""
+            id="finalContenedor"
+          >
+        </div>
+
+        <div aria-checked="false" id="sello" class="hidden aria-checked:gap-2 aria-checked:grid">
+          <div>
+            <input 
+              class="w-full py-2 px-4 rounded-md shadow-lg border-gray-300 placeholder-gray-400 sm:text-sm"
+              type="text" 
+              name="sello" 
+              placeholder="Número de sello"
+              maxlength="8"
+              id="sello"
+            >
+          </div>
+        </div>
       </div>
 
-      <div class="text-center">
-        <button class="bg-amber-500 text-white px-4 py-2 rounded-md my-4" type="submit">Enviar</button>
+      <div class="">
+        <button 
+          class="w-full py-2 px-4 rounded-md bg-amber-500 text-sm font-semibold shadow-lg text-white hover:bg-amber-600" 
+          type="submit">
+            Enviar
+        </button>
       </div>        
     </div>
   </form>
+  <div class="hidden md:block w-3/4 relative justify-self-end">
+    <img src="{% static 'img\camion.jpeg' %}" alt="Side Screen Image" class="w-full h-3/5 object-cover">
+    <div class="absolute inset-0 bg-gradient-to-l from-transparent to-white"></div>
+  </div>
 </div>
         
-      <!--Funcion en javascript para que la hora se ponga automaticamente-->
-      <script>
-        function setDateTime() {
-          const dateInput = document.querySelector('input[name="fecha"]');
-          const now = new Date();
-          const year = now.getFullYear();
-          const month = String(now.getMonth() + 1).padStart(2, '0');
-          const day = String(now.getDate()).padStart(2, '0');
-          const hours = String(now.getHours()).padStart(2, '0');
-          const minutes = String(now.getMinutes()).padStart(2, '0');
-        
-          // El valor del campo datetime-local debe tener el formato "AAAA-MM-DDThh:mm"
-          const dateTimeValue = `${year}-${month}-${day}T${hours}:${minutes}`;
-          dateInput.value = dateTimeValue;
-        }
-        </script>
-
-      <!--funcion en javascript para que cuando el camion no vaya cargado no se pueda escribir el n° del contenedor y el n° de sello-->
-      <script>
-        const cargado = document.getElementById('cargado');
-        const sello = document.getElementById('sello');
-      
-        cargado.addEventListener('change', () => {
-          if (cargado.checked) {
-            // Si el cargado está marcado (cargado es igual a 1), habilitar los campos
-            sello.disabled = false;
-          } else {
-            // Si el cargado no está marcado (cargado es igual a 0), deshabilitar los campos
-            sello.disabled = true;
-          }
-        });
-      </script>
-    
-      
-    </form>
-  </div>
-
-{% endblock %}
+<!--Funcion en javascript para que la hora se ponga automaticamente-->
+<script>
+  function setDateTime() {
+    const dateInput = document.querySelector('input[name="fecha"]');
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
   
+    // El valor del campo datetime-local debe tener el formato "AAAA-MM-DDThh:mm"
+    const dateTimeValue = `${year}-${month}-${day}T${hours}:${minutes}`;
+    dateInput.value = dateTimeValue;
+  }
+</script>
+
+<script>
+  // Get references to the checkbox and the div element
+  const checkbox = document.getElementById('areaCheckboxSello');
+  const divElement = document.getElementById('sello');
+  
+  // Add an event listener to the checkbox to handle changes
+  checkbox.addEventListener('change', function() {
+    // Update the aria-checked attribute of the div based on the checkbox value
+    divElement.setAttribute('aria-checked', this.checked);
+  });
+</script>
+{% endblock %}

@@ -2,162 +2,85 @@
 {% load static %}
 
 {% block menu %}
-  
-    <div class="mx-5 py-6 h-screen">
-      <div class="bg-zinc-400 h-2/3">
-        <!--Introducción-->
-        <div class="grid grid-cols-2 px-3">
-          <div class="py-2">
-            <h3 class="text-2xl font-bold"> Registros </h3>
-            <p>
-              Puedes navegar entre los registros de camiones realizados normalmente ordenados desde el más reciente al más lejano.
-            </p>
-            <p>
-              Si lo que buscas en ingresar un nuevo registro, puedes observar ingresar al formulario con la pestaña de la derecha de la pantalla.
-            </p>
-          </div>
-          <div class="grid grid-cols-2 gap-2 max-h-7">
-            {% if usuario.es_admin == "1" %}
-            <p class="col-span-2 md:col-span-1 bg-yellow-400 py-2 text-center text-zinc-950 font-medium rounded-b-xl shadow-yellow-800 shadow-md hover:shadow-yellow-600 hover:shadow-lg">
-              <a href="{% url "usuarios" %}">
-                Accede aquí al control de usuarios!
-              </a>
-            </p>
-            {% endif %}
-            <p class="col-span-2 md:col-span-1 bg-yellow-400 py-2 text-center text-zinc-950 font-medium rounded-b-xl shadow-yellow-800 shadow-md hover:shadow-yellow-600 hover:shadow-lg">
-              <a href="{% url 'nuevoRegistro' %}">
-                Accede aquí al registro de camiones!
-              </a>
-            </p>
-          </div>          
-        </div>
-        <!--Filtro de registros-->
-        <div class="px-3">
-            <h3 class="text-2xl font-bold mt-8"> Filtrar registros </h3>
-              <p>
-                Si buscas algo más particular, puedes filtrar según el número del tracto que estes buscando.
-              </p>
-              <p>
-                Para volver a ver todos los registros solo debes volver a presionar filtrar sin haber indicado ningún tracto.
-              </p>
-              <form action="." method="POST" class="flex items-center">
-                {% csrf_token %}
-                <label for="tracto" class="mr-2 font-semibold">N° Tracto</label>
-                <div class="mx-2 ">
-                  <input type="text" name="tracto" placeholder="Ingrese el número de tracto"maxlength="4" class="rounded-md"
-                >
-                </div>
-                {% comment %} 
-                <div class="ml-4 my-2"> <!-- Agregamos una clase de margen a la izquierda -->
-                  <label for="todo">Volver a mostrar todo</label>
-                  <input 
-                    type="checkbox" 
-                    name="todo" 
-                    value="1"
-                    id="todo"
-                  >
-                </div> 
-                {% endcomment %}
-                {% comment %} 
-                <div class="ml-4 my-2"> <!-- Agregamos una clase de margen a la izquierda -->
-                  <label for="hora">Hora</label>
-                  <input 
-                    type="datetime-local" 
-                    name="fecha" 
-                    value=""
-                  >
-                </div> 
-                {% endcomment %}
-              
-                <button class="bg-amber-500 text-white px-4 py-2 rounded-md my-4" type="submit">
-                  Filtrar
-                </button>     
-              </form>
-              
-        </div>
-        <!--Tabla de los registros-->
-        <div class="bg-zinc-400 h-3/4 text-center py-4 px-6 overflow-scroll">
-          <table class="min-w-full divide-y divide-gray-300">
-            <thead>
-              <tr>
-                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">N° Tracto</th>
-                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">Estado</th>
-                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">Equipo</th>
-                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">Fecha</th>
-                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">Hora</th>
-                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">Nombre Conductor</th>
-                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">PPU semi remolque</th>
-                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">n° contenedor</th>
-                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">n° sello</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for registro in registros %}
-              <tr>
-                <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">{{ registro.tracto }}</td>
-                <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">{{ registro.estado }}</td>
-                <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">{{ registro.camion }}</td>
-                <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">{{ registro.fecha }}</td>
-                <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">{{ registro.hora }}</td>
-                <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">{{ registro.conductor }}</td>
-                <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">{{ registro.ppu }}</td>
-                <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">{{ registro.contenedor }}</td>
-                <td scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">{{ registro.sello }}</td>
-              </tr>
-              <tr>
-                <th colspan="10"></th>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
+<div class="mx-5 py-6 h-screen">
+  <div class="">
+    <!-- Introducción -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 px-3">
+      <div class="py-2">
+        <h3 class="text-4xl font-semibold"> Registros </h3>
+        <!-- Filtro de registros -->
+        <div class="mt-2">
+          <form action="." method="POST" class="flex items-center">
+            {% csrf_token %}
+            <div class="grid">
+              <label for="tracto" class="mr-2 font-semibold">N° Tracto</label>
+              <input 
+                type="text" 
+                name="tracto" 
+                placeholder="Ingrese el número de tracto" 
+                maxlength="4" 
+                class="w-full sm:w-96 rounded-md">
+
+              <button 
+                class="bg-amber-400 hover:bg-amber-600 shadow-lg text-white px-4 py-2 rounded-md my-2" type="submit">
+                Filtrar
+              </button>   
+            </div> 
+          </form>   
         </div>
       </div>
-    </div>    
-
+      <div class="grid gap-3 grid-rows-2 my-2 sm:w-80 sm:h-1/2 justify-self-end">
+        {% if usuario.es_admin == "1" %}
+        <p class="col-start-2 row-start-2 h-12 sm:col-span-1 bg-amber-400 hover:bg-amber-600 shadow-lg py-2 text-center text-white font-medium rounded-lg">
+          <a href="{% url "usuarios" %}">
+            Control de usuarios
+          </a>
+        </p>
+        {% endif %}
+        <p class="col-start-2 h-12 sm:col-span-1 bg-amber-400 hover:bg-amber-600 shadow-lg py-2 text-center text-white font-medium rounded-lg">
+          <a href="{% url 'nuevoRegistro' %}">
+            Crear un registro
+          </a>
+        </p>
+      </div>          
+    </div>
+    
+    <!-- Tabla de los registros -->
+    <div class="text-center pt-4 px-6 h-3/5 overflow-auto py-4">
+      <table class="min-w-full table-fixed rounded-t-lg overflow-hidden  top-0 bg-zinc-400">
+        <thead>
+          <tr>
+            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">N° Tracto</th>
+            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">Estado</th>
+            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">Equipo</th>
+            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">Fecha</th>
+            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">Hora</th>
+            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">Nombre Conductor</th>
+            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">PPU semi remolque</th>
+            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">N° contenedor</th>
+            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">N° sello</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for registro in registros %}
+          <tr class="{% cycle 'bg-zinc-200' 'bg-white' %}">
+            <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">{{ registro.tracto }}</td>
+            <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">{{ registro.estado }}</td>
+            <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">{{ registro.camion }}</td>
+            <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">{{ registro.fecha }}</td>
+            <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">{{ registro.hora }}</td>
+            <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">{{ registro.conductor }}</td>
+            <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">{{ registro.ppu }}</td>
+            <td scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">{{ registro.contenedor }}</td>
+            <td scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">{{ registro.sello }}</td>
+          </tr>
+          <tr>
+            <th colspan="10"></th>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>      
+  </div>
+</div>    
 {% endblock %}
-                    <tbody class="bg-white">
-                    {% for e in tasks %}
-                      {% if e.isdone == 'No completado'%}
-                      <tr class="even:bg-gray-50">
-                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3"> {{ e.incharge }} </td>
-                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3"> {{ e.tasktitle }} </td>
-                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3"> {{ e.taskdescription }} </td>
-                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {{ e.isdone }} </td>
-                        <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
-                          <form action="{{ e.title }}" method="POST">
-                            {% csrf_token %}
-                            <input class="hidden" id="id" name="titulo" value="{{ e.tasktitle }}"></input>
-                            <button type='submit'> Cerrar tarea </button>
-                          </form>
-                        </td>
-                      </tr>
-                      {% endif %}
-                    {% endfor %}
-                    </tbody>
-                  </table>
-            </div>
-        </div>
-    </div>
-
-
-<h1>
-    Formulario para filtrar resultados.
-</h1>
-<form action="." method="POST">
-    <input/>
-</form>
-<a href="{% url 'nuevoRegistro' %}">
-    Crear un registro!
-</a>
-<h1>
-    Resultados.
-</h1>
-<ul>
-    {% for e in registros %}
-    <div>
-        <li> 
-            {{ e.tracto }} 
-        </li>
-    </div>
-    {% endfor %}
-</ul>
