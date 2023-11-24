@@ -2,76 +2,54 @@
 {% load static %}
 
 {% block usuario-mod %}
-<div class="bg-white px-32 ">
-    <div class="h-3/5 my-16 items-center justify-center px-2 shadow-lg shadow-gray-700">
-        <div class="text-center">
-            <h1 class="text-center text-2xl font-bold"> ¿Algo que actualizar {{nombre}}? </h1>
-        </div>
-        <div class=" w-full py-6 ">
-            <form action="{% url 'mod-usuario'%}" method='POST' class='grid items-center grid-cols-2 gap-8'>
-                {% csrf_token %}
-                    <!-- Editar número de teléfono -->
-                  <div>
-                    <div class="text-center">
-                      <p class="flex flex-col justify-between">
-                        <label> Número de teléfono </label>
-                          {% if usuario.telefono %}
-                            <p class="font-bold text-sm"> {{ telefono }} </p>
-                          {% else %}
-                          <p class="font-bold text-sm"> Se recomienda agregar un telefono. </p>
-                          {% endif %}
-                      </p>
-                      <i class="block font-semibold text-sm text-gray-500">Estructura Telefono: 998765432 </i>
-                    </div>
-                    <div class="text-center">
-                        <input
-                        type="text"
-                        name="telefono"
-                        class="px-4 py-2 rounded-lg bg-white mr-4 font-semibold  ring-1 ring-inset ring-orange-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-orange-600"
-
-                        >
-                    </div>
+<div class="bg-white px-4 sm:px-8 md:px-16 lg:px-32">
+  <div class="h-screen flex flex-col justify-center items-center shadow-lg shadow-gray-700">
+      <div class="text-center mb-8">
+          <h1 class="text-3xl font-bold text-gray-800">¿Algo que actualizar {{nombre}}?</h1>
+      </div>
+      <div class="w-full py-6">
+          <form action="{% url 'mod-usuario'%}" method='POST' class='grid grid-cols-1 md:grid-cols-2 gap-6'>
+              {% csrf_token %}
+              <!-- Editar número de teléfono -->
+              <div>
+                  <label class="block text-sm font-semibold mb-2">Número de teléfono</label>
+                  <div class="flex items-center mb-2">
+                      {% if usuario.telefono %}
+                          <p class="font-bold text-sm">{{ telefono }}</p>
+                      {% else %}
+                          <p class="font-bold text-sm">Se recomienda agregar un teléfono.</p>
+                      {% endif %}
                   </div>
-                  <!-- Editar correo electrónico -->
-                  <div class="my-2">
-                      <div class="text-center">
-                        <label> Correo electrónico </label>
-                      </div>
-                      <div class="">
-                          {% if usuario.email %}
-                            <p class="font-bold text-sm text-center"> {{ email }} </p>
-                          {% else %}
-                          <p class="font-bold text-sm text-center"> Se recomienda agregar un email. </p>
-                          {% endif %}
-                      </div>
-
-                    <div class="text-center">
-
-                      <input
-                      type="email"
-                      name="email"
-                      class="px-4 rounded-lg bg-white mr-4 font-semibold ring-1 ring-inset ring-orange-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-orange-600"
-
-                      >
-                    </div>
+                  <input type="text" name="telefono" class="w-full px-4 py-2 rounded-lg bg-white font-semibold ring-1 ring-inset ring-orange-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-600">
+                  <p class="text-sm text-gray-500 mt-2">Estructura Telefono: 998765432</p>
+              </div>
+              <!-- Editar correo electrónico -->
+              <div>
+                  <label class="block text-sm font-semibold mb-2">Correo electrónico</label>
+                  <div class="flex items-center mb-2">
+                      {% if usuario.email %}
+                          <p class="font-bold text-sm">{{ email }}</p>
+                      {% else %}
+                          <p class="font-bold text-sm">Se recomienda agregar un correo electrónico.</p>
+                      {% endif %}
                   </div>
-                  <!-- <div class="text-center">
-                    <p>Grupo</p>
-                    <p>{{equipo}}</p>
-                  </div> -->
-
-
-                  <div class="py-6 text-center">
-                    <a href="{% url 'mod-usuario-pass' %}" class="w-28 py-2 px-4 rounded-md bg-amber-500 text-sm font-semibold shadow-lg text-white hover:bg-amber-600">Cambiar contraseña</a>
-                  </div>
-
-                <div class="text-center">
-                    <button type="submit" class='w-28 py-2 px-4 rounded-md bg-amber-500 text-sm font-semibold shadow-lg text-white hover:bg-amber-600'> Confirmar </button>
-                </div>
-
-              </form>
-        </div>
-    </div>
+                  <input type="email" name="email" class="w-full px-4 py-2 rounded-lg bg-white font-semibold ring-1 ring-inset ring-orange-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-600">
+              </div>
+              <!-- <div class="text-center">
+                  <p>Grupo</p>
+                  <p>{{equipo}}</p>
+              </div> -->
+              <div class="py-6 text-center md:text-left">
+                  <a href="{% url 'mod-usuario-pass' %}" class="w-full md:w-48 py-2 px-4 rounded-md bg-amber-500 text-sm font-semibold shadow-lg text-white hover:bg-amber-600">Cambiar contraseña</a>
+              </div>
+              <div class="text-center">
+                  <button type="submit" class='w-full md:w-48 py-2 px-4 rounded-md bg-amber-500 text-sm font-semibold shadow-lg text-white hover:bg-amber-600'>Confirmar</button>
+              </div>
+          </form>
+      </div>
+  </div>
 </div>
+
+
 
 {% endblock %}
